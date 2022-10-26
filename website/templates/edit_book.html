@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %} edit books {% endblock %}
+{% block content %}
+
+<form method="POST">
+    <h5 align="center">Book Creation</h5>
+    <div class="form-group">
+        <br>
+        <p align="center"> Book Title   <br><input type="text" align="center" id="book-title"  name="book-title"  value={%print(book.book_title)%}></p>
+        <p align="center"> Author       <br><input type="text" align="center" id="author"      name="author"      value={%print(book.author)%}     readonly="readonly"> </p>
+        <p align="center"> Summary      <br><textarea class="form-control"    id="summary"     name="prologue">{%print(book.prologue)%}</textarea></p>
+    </div>
+     <div class="container">
+      <ul class="ks-cboxtags">
+          {% for element in form_checkboxes %}
+          <li><input type="checkbox" id={%print(element)%} name={%print(element)%} value="True"><label for={%print(element)%}>{%print(element)%}</label></li>
+          {% endfor %}
+            </ul>
+    </div>
+    <div class="wrapper">
+        <button type="submit" value="Send Form" class="btn btn-primary">Accept Changes</button>
+        <button type="reset" class="btn btn-warning">Reset</button>
+    </div>
+</form>
+<script>
+    var summary = document.getElementById("summary").innerHTML;
+</script>
+<style>
+.wrapper{
+text-align: center;
+}
+.button{
+position: absolute;
+top: 50%;
+}
+</style>
+
+{% endblock %}

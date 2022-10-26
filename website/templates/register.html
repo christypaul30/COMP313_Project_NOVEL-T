@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %}Login{% endblock %}
+{% block content %}
+ <div id="form-register">
+    <form class="w3-container" method="post">
+        <div class="w3-section">
+            <p><b>Email Address</b></p>
+            <input type="email" class="form-control" name="email" onblur="checkEmail(this)" placeholder="Enter email"/><br>
+            <label for="username"><b>User Name</b></label>
+
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username"/><br>
+
+            <label for="password1"><b>Password</b></label>
+            <input type="password" class="form-control" id="password1" name="password1" onblur="checkPassword()" placeholder="Enter Password"/><br>
+            <p id="password1-error" class="hidden-subtext">this is subtext</p>
+
+            <label for="password2"><b>Re-enter Password</b></label>
+            <input type="password" class="form-control" id="password2" name="password2" placeholder="Re-enter Password"/><br>
+            <p id="password2-error" class="hidden-subtext">this is subtext</p>
+
+
+            <button class="w3-button w3-block w3-green w3-section w3-padding" href="/sign_up" type="submit" >Create Account</button>
+            <input type="hidden" id="form2" name="type" value="register">
+        </div>
+    </form>
+ </div>
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %} Book {% endblock %}
+{% block content %}
+<h4 align="center">{{book.book_title}}  <i class="fa-solid fa-bookmark" onclick="bookMark({{book.id}})"></i></h4>
+<hr>
+<br>
+<div>
+    <img src="/static/emptybook.png" class="book-cover">
+    <div class="wrapper">
+        <div class="details" align="center">
+            <div class="row">
+                <div class="book-attribute">title(s):</div>
+                <div class="attribute-context">{{book.book_title}}</div>
+            </div>
+            <div class="row">
+                <div class="book-attribute">Genre(s): </div>
+                <div class="attribute-context">{{book_genres}}</div>
+            </div>
+            <div class="row">
+                <div class="book-attribute">Author: </div>
+                <div class="attribute-context">{{book.author}}</div>
+            </div>
+            <div class="row">
+                <div class="book-attribute">rank: </div>
+                <div class="attribute-context">N/A</div>
+            </div>
+            <div class="row">
+                <div class="book-attribute">rating: </div>
+                <div class="attribute-context">N/A</div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div>
+    <h3 align="center"> Book Summary </h3>
+    <hr>
+    <p align="left">{% print(book.prologue) %}</p>
+</div>
+<br>
+<br>
+<div class="w3-container">
+    <h3 align="center"> Book Chapters </h3><button class="btn btn-success" onclick="displayModal(document.getElementById('add-chapter-modal'))">+</button>
+    <hr>
+    <ul class="list-group list-group-flush" id="books">
+    {% for chapter in book.book_chapters %}
+    <li class="list-group-item">
+        <h6 class="list-header"  onClick="retrieveChapter({{ chapter.id }})">{{ chapter.chapter_title }}</h6>
+        <button type="button" class="btn btn-warning" onClick="editChapter{{chapter.book_id, chapter.id}}" id="edit-modal">edit chapter</button>
+        <button type="button" class="close" onClick="deleteChapter{{chapter.book_id, chapter.id}}" id="delete">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+    </ul>
+</div>
+<li> Add a comments section for the book </li>
+<li> Use database to fill page with chapters in a list/button manner to reroute to page that has chapter context(user reads the book chapter and can navigate to next)</li>
+
+
+
+<!--add chapter modal-->
+<div class="w3-container">
+    <div id="add-chapter-modal" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-opacity" style="max-width:450px">
+            <span onclick="document.getElementById('add-chapter-modal').style.display='none'" class="w3-button w3-large w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+            <div class="w3-center"><br>
+                <h4>Add Chapter</h4>
+                <p>You can name your chapter's title or leave it blank, and it will automatically be numbered!</p>
+            </div>
+            <hr>
+            <form method="post" class="w3-container">
+                <div class="w3-section">
+                    <label for="add-title"><b>Chapter Title</b></label>
+                    <input type="text" id="add-title" name="chapter-title" class="w3-input w3-border w3-margin-bottom" />
+                    <p align="left"><b>Chapter body</b><br><textarea class="form-control" name="chapter-context"></textarea></p>
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                    <button type="button" class="btn btn-warning" onclick="document.getElementById('add-chapter-modal').style.display='none'">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--edit chapter modal-->
+<div class="w3-container">
+    <div id="edit-chapter-modal" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-opacity" style="max-width:450px">
+            <span onclick="document.getElementById('edit-chapter-modal').style.display='none'" class="w3-button w3-large w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+            <div class="w3-center"><br>
+                <h4><b>Edit Chapter</b></h4>
+                <hr>
+            <form method="post" class="w3-container">
+                <div class="w3-section">
+                    <label for="add-title"><b>Chapter Title</b></label>
+                    <input type="text" id="edit-title" name="chapter-title" class="w3-input w3-border w3-margin-bottom" />
+                    <p align="center"><b></b><br><textarea class="form-control" id='edit-context' name="chapter-context"></textarea></p>
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                    <button type="button" class="btn btn-warning" onclick="document.getElementById('edit-chapter-modal').style.display='none'">Cancel</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.wrapper{
+    background:white;
+    color:black;
+    max-width: 600px;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 50px;
+    padding-left: 100px;
+    overflow:hidden;
+}
+.book-cover{
+float:left;
+width:24%;
+height:22%;
+}
+
+.book-attribute{
+max-width:0px;
+padding-right:110px;
+padding-bottom:10px;
+}
+
+.attribute-context{
+}
+
+.center{
+align:center;
+float:center;
+}
+</style>
+{% endblock %}

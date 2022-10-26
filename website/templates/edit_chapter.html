@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %} edit chapter {% endblock %}
+{% block content %}
+<form method="POST">
+    <h5 align="center">Chapter Editor</h5>
+    <hr>
+    <br>
+    <br>
+    <div class="form-group" align="center">
+        <p align="center">Chapter Title</p>
+        <input align="center" type="text" value="{{chapter.chapter_title}}" id="form-title" name="form-title"><br><br><br>
+        <p align="center">Chapter Context</p>
+        <textarea class="form-control" id="form-context" name="form-context">"{{chapter.context}}"</textarea>
+        <input type="hidden" id="chapter-id" name="chapter-id" value="{{chapter.id}}">
+        <input type="hidden" id="book-id" name="book-id" value="{{chapter.book_id}}">
+
+    </div>
+        <button type="submit" value="Send Form" class="btn btn-primary">Confirm changes</button>
+        <button type="reset" class="btn btn-warning">reset</button>
+        <button type="button" class="btn btn-danger">cancel</button>
+</form>
+{% endblock %}

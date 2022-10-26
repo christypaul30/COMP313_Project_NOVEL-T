@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %} add books {% endblock %}
+{% block content %}
+<form method="POST">
+    <h5 align="center">Book Creation</h5>
+    <div class="form-group">
+        <br>
+        <p align="center"> Book Title   <br><input type="text" align="center" id="book_title"  name="book_title"></p>
+        <p align="center"><br><input type="text" align="center" id="author"      name="author" value={%print(user.username)%}      readonly="readonly"> </p>
+       </div>
+    <p align="center"> Chapter/Prologue Text  <br><textarea class="form-control" name="prologue"></textarea></p>
+     <div class="container">
+      <ul class="ks-cboxtags">
+          {% for element in form_checkboxes %}
+          <li><input type="checkbox" id={%print(element)%} name={%print(element)%} value="True"><label for={%print(element)%}>{%print(element)%}</label></li>
+          {% endfor %}
+       <!-- <li><input type="checkbox" id="checkboxOne" name="checkboxOne" value="Sci-Fi"><label for="checkboxOne">Sci-fi</label></li>
+        <li><input type="checkbox" id="checkboxTwo" name="checkboxTwo" value="Fantasy"><label for="checkboxTwo">Fantasy</label></li>
+        <li><input type="checkbox" id="checkboxThree" name="checkboxThree" value="Romance"><label for="checkboxThree">Romance</label></li>
+        <li><input type="checkbox" id="checkboxFour" name="checkboxFour" value="Action/Adventure"><label for="checkboxFour">Action/Adventure</label></li>
+        <li><input type="checkbox" id="checkboxFive" name="checkboxFive" value="Slice of Life"><label for="checkboxFive">Slice of Life</label></li>
+        <li><input type="checkbox" id="checkboxSix" name="checkboxSix" value="Comedy"><label for="checkboxSix">Comedy</label></li>
+        <li><input type="checkbox" id="checkboxSeven" name="checkboxSeven" value="Tragedy"><label for="checkboxSeven">Tragedy</label></li>
+        <li><input type="checkbox" id="checkboxEight" name="checkboxEight" value="Mystery"><label for="checkboxEight">Mystery</label></li>
+        <li><input type="checkbox" id="checkboxNine" name="checkboxNine" value="Thriller"><label for="checkboxNine">Thriller</label></li>
+        <li><input type="checkbox" id="checkboxTen" name="checkboxTen" value="Horror"><label for="checkboxTen">Horror</label></li>
+        <li class="ks-selected"><input type="checkbox" id="checkboxEleven" name="checkboxEleven" value="Isekai"><label for="checkboxEleven">Isekai</label></li>
+        <li><input type="checkbox" id="checkboxTwelve" name="checkboxTwelve" value="Reincarnation"><label for="checkboxTwelve">Reincarnation</label></li>
+        <li><input type="checkbox" id="checkboxThirteen" name="checkboxThirteen"  value="Transmigration"><label for="checkboxThirteen">Transmigration</label></li>
+        <li><input type="checkbox" id="checkboxFourteen" name="checkboxFourteen" value="Historical"><label for="checkboxFourteen">Historical</label></li>
+        <li><input type="checkbox" id="checkboxFifteen" name="checkboxFifteen" value="Military"><label for="checkboxFifteen">Military</label></li>
+        <li><input type="checkbox" id="checkboxSixteen" name="checkboxSixteen" value="School"><label for="checkboxSixteen">School</label></li>
+        <li><input type="checkbox" id="checkboxSeventeen" name="checkboxSeventeen" value="Spy"><label for="checkboxSeventeen">Spy</label></li>
+        <li><input type="checkbox" id="checkboxEighteen" name="checkboxEighteen" value="Martial Arts"><label for="checkboxEighteen">Martial Arts</label></li>-->
+      </ul>
+    </div>
+    <div class="wrapper">
+        <button type="submit" value="Send Form" class="btn btn-primary">Validate Book</button>
+        <button type="reset" class="btn btn-warning">Reset</button>
+    </div>
+</form>
+
+<style>
+.wrapper{
+text-align: center;
+}
+.button{
+position: absolute;
+top: 50%;
+}
+</style>
+
+{% endblock %}
+
+<script>
+    func nameGenerator(){
+
+    }
+</script>

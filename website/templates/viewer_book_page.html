@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %} Book {% endblock %}
+{% block content %}
+<h4 align="center">{{book.book_title}} <i class="fa-solid fa-bookmark" onclick='bookMark({{book.id}})'></i></h4>
+<hr>
+<br>
+<div>
+    <img src="/static/emptybook.png" class="book-cover">
+    <div class="wrapper">
+        <div class="details" align="center">
+            <div class="row">
+                <div class="book-attribute">title(s):</div>
+                <div class="attribute-context">{{book.book_title}}</div>
+            </div>
+            <div class="row">
+                <div class="book-attribute">Genre(s): </div>
+                <div class="attribute-context">{{book.genre}}</div>
+            </div>
+            <div class="row">
+                <div class="book-attribute">Author: </div>
+                <div class="attribute-context">{{book.author}}</div>
+            </div>
+            <div class="row">
+                <div class="book-attribute">rank: </div>
+                <div class="attribute-context">N/A</div>
+            </div>
+            <div class="row">
+                <div class="book-attribute">rating: </div>
+                <div class="attribute-context">N/A</div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div>
+    <h3 align="center"> Book Summary </h3>
+    <hr>
+    <p align="left">{% print(book.prologue) %}</p>
+</div>
+<br>
+<br>
+<div class="w3-container">
+    <h3 align="center"> Book Chapters </h3>
+    <hr>
+    <ul class="list-group list-group-flush" id="books">
+    {% for chapter in book.book_chapters %}
+    <li class="list-group-item">
+        <h6 class="list-header"  onClick="retrieveChapter({{ chapter.id }})">{{ chapter.chapter_title }}</h6>
+    </li>
+    {% endfor %}
+    </ul>
+</div>
+
+
+
+<style>
+.wrapper{
+    background:white;
+    color:black;
+    max-width: 600px;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 50px;
+    padding-left: 100px;
+    overflow:hidden;
+}
+.book-cover{
+float:left;
+width:24%;
+height:22%;
+}
+
+.book-attribute{
+max-width:0px;
+padding-right:110px;
+padding-bottom:10px;
+}
+
+.attribute-context{
+}
+
+.center{
+align:center;
+float:center;
+}
+</style>
+{% endblock %}

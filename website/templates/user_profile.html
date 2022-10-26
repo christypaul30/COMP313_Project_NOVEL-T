@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block title %} Account Details {% endblock %}
+{% block content %}
+<div class="something">
+<h2 align="left" class="header">Profile</h2>
+    <div class="card" align="">
+      <div class="form-group">
+         <div class="left">
+            <h5>Email Address</h5>
+            <p class="subtext">{{user.email}}</p>
+         </div>
+          <div class="right">
+            <button type="button" class="btn btn-primary" id="email-change" onclick="displayModal(document.getElementById('email-confirmation'))">edit</button>
+          </div>
+      </div>
+      <div class="form-group">
+          <div class="left">
+              <h5>User Name</h5>
+              <p class="subtext">{{user.username}}</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-primary" id="username-change" onclick="displayModal(document.getElementById('username-confirmation'))">edit</button>
+          </div>
+      </div>
+    </div>
+</div>
+<hr>
+<h4> Password Security </h4>
+<p>Change password using existing password or upgrade your security and change password using email authentication.</p>
+<button class="btn btn-primary" id="password-change" onclick="displayModal(document.getElementById('password-confirmation'))"> Change password </button>
+<br>
+<hr>
+<h4> Account Actions </h4>
+<p> Account can be disabled and recovered later.</p>
+<button href="" class="btn btn-danger">Disable Account</button>
+<button type="button" id="deletion" class="btn outline" onclick="displayModal(document.getElementById('account-confirmation'))">Delete Account</button>
+
+<!--modals for page -->
+<!--email modal-->
+<div class="w3-container">
+      <div id="email-confirmation" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-opacity" style="max-width:450px">
+            <span onclick="document.getElementById('email-confirmation').style.display='none'" class="w3-button w3-large w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+            <div class="w3-center"><br>
+                <h4>Enter email address</h4>
+                <p>Enter a new email address and your existing password.</p>
+            </div>
+              <form method="post" class="w3-container">
+                  <div class="w3-section">
+                      <label for="email-form-email"><b>Enter new email address</b></label>
+                      <input type="email" class="w3-input w3-border w3-margin-bottom" id="email-form-email" name="email-form-email" placeholder=""/>
+                      <label for="email-form-password"><b>Enter password</b></label>
+                      <input type="password" class="w3-input w3-border w3-margin-bottom" id="email-form-password" name="email-form-password" placeholder=""/>
+                      <button type="button" class="btn btn-warning" onclick="document.getElementById('email-confirmation').style.display='none'">Cancel</button>
+                      <button type="submit" class="btn btn-success">Confirm</button>
+                      <input type="hidden" id="email-form" name="form" value="email-modal">
+                  </div>
+              </form>
+        </div>
+      </div>
+</div>
+
+<!--username modal-->
+<div class="w3-container">
+      <div id="username-confirmation" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-opacity" style="max-width:450px">
+            <span onclick="document.getElementById('username-confirmation').style.display='none'" class="w3-button w3-large w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+            <div class="w3-center"><br>
+                <h4>Enter new username</h4>
+                <p>Enter password.</p>
+            </div>
+              <form method="post" class="w3-container">
+                  <div class="w3-section">
+                      <label for="modal-username"><b>Username</b></label>
+                      <input type="text" class="w3-input w3-border w3-margin-bottom" id="modal-username" name="modal-username" placeholder=""/>
+                      <label for="modal-password"><b>Password</b></label>
+                      <input type="password" class="w3-input w3-border w3-margin-bottom" id="modal-password" name="modal-password" placeholder=""/>
+                      <input type="hidden" id="username-form" name="form" value="username-modal">
+                      <button type="button" class="btn btn-warning" onclick="document.getElementById('username-confirmation').style.display='none'">Cancel</button>
+                      <button type="submit" class="btn btn-success">Confirm</button>
+                  </div>
+              </form>
+        </div>
+      </div>
+</div>
+
+<!--password modal-->
+<div class="w3-container">
+      <div id="password-confirmation" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-opacity" style="max-width:450px">
+            <span onclick="document.getElementById('password-confirmation').style.display='none'" class="w3-button w3-large w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+            <div class="w3-center"><br>
+                <h4>Enter new password</h4>
+                <p>Enter existing password below new password.</p>
+            </div>
+              <form method="post" class="w3-container">
+                  <div class="w3-section">
+                      <label for="modal-existing-password"><b>Existing password</b></label>
+                      <input type="password" class="w3-input w3-border w3-margin-bottom" id="modal-existing-password" name="existing-password" placeholder=""/>
+                      <label for="modal-new-password"><b>New password</b></label>
+                      <input type="password" class="w3-input w3-border w3-margin-bottom" id="modal-new-password" name="new-password" placeholder=""/>
+
+                      <input type="hidden" id="password-form" name="form" value="password-modal">
+                      <button type="button" class="btn btn-warning" onclick="document.getElementById('password-confirmation').style.display='none'">Cancel</button>
+                      <button type="submit" class="btn btn-success">Confirm</button>
+                  </div>
+              </form>
+        </div>
+      </div>
+</div>
+
+<!--account modal-->
+<div class="w3-container">
+      <div id="account-confirmation" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-opacity" style="max-width:450px">
+            <span onclick="document.getElementById('account-confirmation').style.display='none'" class="w3-button w3-large w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+            <div class="w3-center"><br>
+                <h4>Delete account</h4>
+                <p>Enter "Delete Account" to <b>permanently</b> delete your account.</p>
+            </div>
+              <form method="post" class="w3-container">
+                  <div class="w3-section">
+                      <input type="text" class="w3-input w3-border w3-margin-bottom" id="delete-confirmation" name="confirmation" placeholder=""/>
+                      <input type="hidden" id="account-form" name="form" value="account-modal">
+                      <button type="button" class="btn btn-warning" onclick="document.getElementById('account-confirmation').style.display='none'">Cancel</button>
+                      <button type="submit" class="btn btn-success">Confirm</button>
+                  </div>
+              </form>
+        </div>
+      </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+<!--    document.getElementById('email-confirmation').onclick = confirmation;-->
+<!--    document.getElementById('username-confirmation').onclick = confirmation;-->
+<!--    document.getElementById('password-confirmation').onclick = confirmation;-->
+<!--    document.getElementById('account-confirmation').onclick = confirmation;-->
+  });
+</script>
+<style>
+  .w3-modal-hidden{
+  display: none;
+  }
+  .left{
+  float:left;
+  }
+  .right{
+  float:right;
+  padding:16px;
+  }
+  .center{
+  float:center;
+  }
+  .clear{
+  clear:both;
+  }
+  .form-group{
+  max-width:700px;
+  }
+  .card{
+  border-radius:20px;
+  background:grey;
+  max-width:600px;
+  }
+  .something{
+  background:black;
+  max-width:600px;
+  padding:50px;
+  border-radius:40px;
+  }
+  .header{
+  color:white;
+  }
+  .form-group p{
+  padding: 0px;
+  padding-left: 10px;
+  line-height: 0.5;
+  color:white;
+  }
+  .form-group h5{
+  padding-top: 20px;
+  padding-left: 10px;
+  line-height:0.5;
+  color:white;
+  }
+  .outline{
+  background-color:white;
+  color:red;
+  border: 2px solid red;
+  }
+</style>
+{% endblock %}

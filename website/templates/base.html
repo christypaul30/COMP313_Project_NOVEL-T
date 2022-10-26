@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+    <title>{% block title %}url page title{% endblock %}</title>
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-lg">
+        <a href="/">
+            <!--<img src="{{ url_for('static', filename='logo.png')}}" height='40' width='40'>  flask method: img src  -->
+            <img src="/static/logo.png" height="50" width="50" align="left" >  <!-- HTML method img src -->
+        </a>
+        <button
+            class="navbar-toggler ml-auto custom-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="search-container">
+                <form method="POST">
+                <input type="text" placeholder="Search.." name="search_string">
+                <button>
+                    <input type="submit" name="type" value="search">
+                    </button>
+                </form>
+            </ul>
+            <ul class="nav navbar-nav">
+
+                {% if user.is_authenticated %}
+                <a class="nav-item nav-link" id="stats-page" href="/stats-page">Stats Page</a>
+                <a class="nav-item nav-link" id="home-page" href="/">Home Page</a>
+
+            </ul>
+
+            <ul class="navbar-nav ml-auto" >
+                <a class="account-dropdown">
+                    <a class="dropdown-toggle"
+                            id="account_drop_down_menu_authenticated"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">{% print(user.username) %}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="account_drop_down_menu_btn">
+                        <a class="nav-item nav-link" id="profile" href="/profile">Account Settings</a>
+                        <a class="nav-item nav-link" id="book" href="/book">Add/Edit book</a>
+                        <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                    </div>
+                </a>
+            </ul>
+                {% else %}
+            <!--- IDE is incorrect </ul> is needed for else statement otherwise nav dropdown would not align properly (error if aligned left on navbar) >--->
+            </ul>
+                <ul class="navbar-nav ml-auto" >
+                    <a class="account-dropdown">
+                        <a class="dropdown-toggle"
+                                id="account_drop_down_menu_un-authenticated"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">My Account
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="account_drop_down_menu_btn">
+                            <a class="nav-item nav-link" onclick="document.getElementById('id01').style.display='block'">Login /  Sign-up</a>
+                        </div>
+                        {% endif %}
+                    </a>
+                </ul>
+        </div>
+    </nav>
+    <div class="w3-container">
+      <div id="id01" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-opacity" style="max-width:400px">
+            <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-large w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+            <div class="w3-center"><br>
+                <img src="static/emptybook.png" style="width:30%" class="w3-circle w3-margin-top">
+            </div>
+            <div class="w3-bar w3-border-bottom">
+                <button class="tablink w3-bar-item w3-button" onclick="openModal(event, 'form-login')">Login</button>
+                <button class="tablink w3-bar-item w3-button" onclick="openModal(event, 'form-register')">Register</button>
+            </div>
+            <div id="form-login" class="w3-container modalStuff">
+                <form class="w3-container" method="post">
+                    <div class="w3-section">
+                        <label for="modal-email"><b>Email Address</b></label>
+                        <input type="email" class="w3-input w3-border w3-margin-bottom" id="modal-email" name="email" placeholder="Enter email/Username"/>
+                        <label><b>Password</b></label>
+                        <input class="w3-input w3-border" type="password" placeholder="Enter Password" name="password" required>
+                         <br>
+                        <button class="w3-button w3-block w3-green w3-section w3-padding" href="/login" type="submit" >Login</button>
+                        <input type="hidden" id="form1" name="type" value="login">
+                    </div>
+                </form>
+            </div>
+            <div id="form-register" class="w3-container modalStuff">
+                <form class="w3-container" method="post">
+                    <div class="w3-section">
+                        <p><b>Email Address</b></p>
+                        <input type="email" class="form-control" name="email" placeholder="Enter email"/><br>
+                        <label for="username"><b>User Name</b></label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username"/><br>
+                        <label for="password1"><b>Password</b></label>
+                        <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter Password"/><br>
+                        <label for="password2"><b>Re-enter Password</b></label>
+                        <input type="password" class="form-control" id="password2" name="password2" placeholder="Re-enter Password"/><br>
+                        <button class="w3-button w3-block w3-green w3-section w3-padding" href="/sign_up" type="submit" >Create Account</button>
+                        <input type="hidden" id="form2" name="type" value="register">
+                    </div>
+                </form>
+            </div>
+          <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+            <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
+            <span class="w3-right w3-padding w3-hide-small">Forgot <a href="/password_reset.html">password?</a></span>
+          </div>
+    </div>
+  </div>
+</div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        {% if category == 'error' %}
+        <div class="alert alert-danger alter-dismissable fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% else %}
+        <div class="alert alert-success alter-dismissable fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+    <br>
+    <div class="container">{% block content %} {% endblock %}</div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="{{url_for('static', filename='index.js')}}"></script>
+    <script src="https://kit.fontawesome.com/132011675c.js" crossorigin="anonymous"></script>
+    <script>
+       document.getElementsByClassName("tablink")[0].click();
+
+       function openModal(evt, modalSomething) {
+         var i, x, tablinks;
+         x = document.getElementsByClassName("modalStuff");
+         for (i = 0; i < x.length; i++) {
+           x[i].style.display = "none";
+         }
+         tablinks = document.getElementsByClassName("tablink");
+         for (i = 0; i < x.length; i++) {
+           tablinks[i].classList.remove("w3-light-grey");
+         }
+         document.getElementById(modalSomething).style.display = "block";
+         evt.currentTarget.classList.add("w3-light-grey");
+         }
+    </script>
+</body>
+</html>

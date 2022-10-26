@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} {{chapter.chapter_title}} {% endblock %}
+{% block content %}
+<h5 align="center">home / {{book.book_title}} / {{chapter.chapter_title}} <i class="fa-solid fa-bookmark" onclick='bookMark({{book.id}})'></i></h5>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="form-group" align="center">
+    <p>{{book.book_title}} - {{chapter.chapter_title}}</p>
+    <hr>
+    <p>{% print(chapter.context) %}</p>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div align="center">
+    <button>previous page</button>
+    <button>next page</button>
+</div>
+{% endblock %}
