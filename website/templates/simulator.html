@@ -46,7 +46,7 @@
     <ul class="list-group list-group-flush" id="books">
     {% for chapter in book.book_chapters %}
     <li class="list-group-item">
-        <h6 class="list-header"  onClick="retrieveChapter({{ chapter.id }})">{{ chapter.chapter_title }}</h6>
+        <h6 class="list-header"  onClick="retrieveChapter({{ chapter.id }});addLastchapter({{chapter.book_id}}, {{chapter.id}});">{{ chapter.chapter_title }}</h6>
         <button type="button" class="btn btn-warning" onClick="editChapter{{chapter.book_id, chapter.id}}" id="edit-modal">edit chapter</button>
         <button type="button" class="close" onClick="deleteChapter{{chapter.book_id, chapter.id}}" id="delete">
             <span aria-hidden="true">&times;</span>

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %} Book Read History {% endblock %}
+{% block content %}
+<h1 align="center"> Your Book History </h1>
+{% for book in books %}
+    <a onclick="retrieveBook({{book.id}});" class="list-group-item"><img src="/static/emptybook.png" height="50" width="50" class="book-cover"><b>{{ book.book_title }}</b> - Author:
+    {{book.author}}
+    {% if book.last_chapter is defined %}
+    {{" - Last Chapter read: Chapter #" + book.last_chapter}}
+    {% endif %}
+    </a>
+{% endfor %}
+{% endblock %}
