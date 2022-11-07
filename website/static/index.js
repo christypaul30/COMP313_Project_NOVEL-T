@@ -86,3 +86,11 @@ function generateGenres(book_genre){
     print("hello")
     }
 }
+
+function addBookhistory(bookId){
+    fetch(`/bookhistory/${bookId}`);
+}
+
+function addLastchapter(bookId, chapterId) {
+    fetch(`/bookhistory/${bookId}/${chapterId}`);
+}

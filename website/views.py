@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import redirect
 from website import db
 from website.auth import verification
-from website.models import Book, User, BookChapters, BookGenres, Library
+from website.models import Book, User, BookChapters, BookGenres, Library, BookHistory
 import json
 # This file SHOULD contain all Routes/Views that a non signed in user can see
 
@@ -263,3 +263,35 @@ def bookmark_book():
             db.session.commit()
             flash('book added to personal library', category='success')
     return jsonify({})
+
+
+@views.route('/bookhistory/<bid>', methods=['GET'])
+def add_book_read_history(bid):
+    verification()
+    if db.session.query(BookHistory).filter(BookHistory.book_id == bid, BookHistory.user_id == current_user.id).first():
+        return jsonify({'msg': 'history exists'})
+    db.session.add(BookHistory(bid, current_user.id))
+    db.session.commit()
+    return jsonify({'msg': 'history added'})
+
+@views.route('/bookhistory', methods=['GET'])
+def bookhistory_page():
+    verification()
+    books = []
+    for history in db.engine.execute(f"SELECT * FROM bookhistory WHERE user_id='{current_user.id}'"):
+        book = db.session.query(Book).filter(Book.id == history.book_id).first()
+        if hasattr(history, "last_chapter"):
+            book.last_chapter = str(history.last_chapter)
+        books.append(book)
+    return render_template("book_history.html", user=current_user, books=books)
+
+
+@views.route('/bookhistory/<bid>/<cid>', methods=['GET'])
+def add_last_chapter(bid, cid):
+    verification()
+    h = db.session.query(BookHistory).filter(
+        BookHistory.book_id == bid, BookHistory.user_id == current_user.id
+    ).first()
+    h.last_chapter = cid
+    db.session.commit()
+    return jsonify({'msg': 'last chapter updated'})

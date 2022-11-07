@@ -6,7 +6,7 @@
 <ul class="list-group list-group-flush" id="bookList">
 {% for book in books %}
     <a></a>
- <a onclick="retrieveBook({{book.id}})" class="list-group-item"><img src="/static/emptybook.png" height="50" width="50" class="book-cover"><b>{{ book.book_title }}</b> - Author:
+    <a onclick="retrieveBook({{book.id}});addBookhistory({{book.id}});" class="list-group-item"><img src="/static/emptybook.png" height="50" width="50" class="book-cover"><b>{{ book.book_title }}</b> - Author:
     {{book.author}}</a>
 </ul>
 {% endfor %}

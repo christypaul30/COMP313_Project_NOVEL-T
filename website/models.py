@@ -178,3 +178,16 @@ class Library(db.Model):
         self.book_title = book_title
         self.book_id = book_id
         self.user_id = user_id
+
+
+class BookHistory(db.Model):
+    __tablename__ = 'bookhistory'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column("user_id", db.ForeignKey('user.id'), nullable=False)
+    book_id = db.Column("book_id", db.ForeignKey('book.id'), nullable=False)
+    last_chapter = db.Column("last_chapter", db.ForeignKey('bookchapters.id'), nullable=True)
+
+    def __init__(self, book_id, user_id, last_chapter=None):
+        self.user_id = user_id
+        self.book_id = book_id
+        self.last_chapter = last_chapter
