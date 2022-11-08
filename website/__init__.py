@@ -12,13 +12,14 @@ def create_app():
     app.config['SECRET_KEY'] = 'professor anders is waifu'
     # app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 
-
     ENV = 'dev'
     if ENV == 'dev':
         app.debug = True
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Abathur@localhost/novel-t'
+        print("Using dev server")
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:steven@localhost/novelt'
     else:
         app.debug = False
+        print("Using production server")
         app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://yhslrfopruboqu:f8ee68219de833159b732325e940174f7f10bc0138daa17b009dcb745cc13b8a@ec2-44-198-24-0.compute-1.amazonaws.com:5432/d2qbqedi3pjns4'
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -31,7 +32,7 @@ def create_app():
 
     from .models import User, CharacterSheet, Book, BookChapters, BookGenres, Library
 
-    #create_database(app)
+    # create_database(app)
     with app.app_context():
         db.create_all()
 
