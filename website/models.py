@@ -19,6 +19,7 @@ from sqlalchemy.sql import func
 #         self.time_when_created = time_when_created                                            |
 # ------------------------------------------------------------------------------------------------
 
+
 class CharacterSheet(db.Model):
     __tablename__ = 'charactersheet'
     id = db.Column(db.Integer, primary_key=True)
@@ -42,9 +43,12 @@ class Book(db.Model):
     book_title = db.Column(db.String(150), unique=True, nullable=False)
     author = db.Column(db.Integer, db.ForeignKey('user.id'))
     prologue = db.Column(db.String, nullable=True)
-    publish_date = db.Column(db.DateTime(timezone=True), default=func.now(), nullable=False)
-    book_genres = db.relationship('BookGenres', backref=db.backref('book_genres', lazy=True))
-    book_chapters = db.relationship('BookChapters', backref=db.backref('book_chapters', lazy=True))
+    publish_date = db.Column(db.DateTime(timezone=True),
+                             default=func.now(), nullable=False)
+    book_genres = db.relationship(
+        'BookGenres', backref=db.backref('book_genres', lazy=True))
+    book_chapters = db.relationship(
+        'BookChapters', backref=db.backref('book_chapters', lazy=True))
     date_updated = db.Column(db.DateTime(timezone=True), nullable=False)
 
     def __init__(self, book_title, author, prologue=None, book_genres=None, book_chapters=None, date_updated=None):
@@ -83,7 +87,8 @@ class User(db.Model, UserMixin):
     security_answer = db.Column(db.String(150), nullable=True)
     sheets = db.relationship('CharacterSheet')
     book = db.relationship('Book', backref=db.backref('books', lazy=True))
-    library = db.relationship('Library', backref=db.backref('library', lazy=True))
+    library = db.relationship(
+        'Library', backref=db.backref('library', lazy=True))
 
     def __init__(self, email, username, password, security_question=None, security_answer=None, sheets=None, book=None):
         if book is None:
@@ -180,12 +185,27 @@ class Library(db.Model):
         self.user_id = user_id
 
 
+class BookmarkedChapters(db.Model):
+    __tablename__ = 'bookmarkedchapters'
+    id = db.Column(db.Integer, primary_key=True)
+    chapter_id = db.Column("chapter_id", db.ForeignKey(
+        'bookchapters.id'), nullable=False)
+    book_id = db.Column("book_id", db.ForeignKey('book.id'), nullable=False)
+    user_id = db.Column("user_id", db.ForeignKey('user.id'), nullable=False)
+
+    def __init__(self, chapter_id, book_id, user_id):
+        self.chapter_id = chapter_id
+        self.book_id = book_id
+        self.user_id = user_id
+
+
 class BookHistory(db.Model):
     __tablename__ = 'bookhistory'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column("user_id", db.ForeignKey('user.id'), nullable=False)
     book_id = db.Column("book_id", db.ForeignKey('book.id'), nullable=False)
-    last_chapter = db.Column("last_chapter", db.ForeignKey('bookchapters.id'), nullable=True)
+    last_chapter = db.Column("last_chapter", db.ForeignKey(
+        'bookchapters.id'), nullable=True)
 
     def __init__(self, book_id, user_id, last_chapter=None):
         self.user_id = user_id

@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block title %} Book {% endblock %}
 {% block content %}
-<h4 align="center">{{book.book_title}} <i class="fa-solid fa-bookmark" onclick='bookMark({{book.id}})'></i></h4>
+<h4 align="center">{{book.book_title}}</h4>
+<div align="center">
+    <button type="button" onclick="bookMark({{book.id}})"><i class="fa-solid fa-bookmark"> Bookmark Book</i></button>
+</div>
 <hr>
 <br>
 <div>
@@ -28,6 +31,20 @@
                 <div class="book-attribute">rating: </div>
                 <div class="attribute-context">N/A</div>
             </div>
+            <!-- Share Button - Steven Chen -->
+            <div class="row">
+                <button type="button" 
+                    class="btn btn-info"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    data-trigger="focus"
+                    data-title="Copied to Clipboard!"
+                    id="sharebtn"
+                    onclick="shareButton()"
+                    >
+                    Share Book
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -36,20 +53,37 @@
 <div>
     <h3 align="center"> Book Summary </h3>
     <hr>
-    <p align="left">{% print(book.prologue) %}</p>
+    <p align="center">{% print(book.prologue) %}</p>
 </div>
 <br>
 <br>
 <div class="w3-container">
-    <h3 align="center"> Book Chapters </h3>
+    <div class="container d-flex justify-content-center align-self-center">
+        <h3 class="mx-1"> Book Chapters </h3>
+    </div>
     <hr>
-    <ul class="list-group list-group-flush" id="books">
-    {% for chapter in book.book_chapters %}
-    <li class="list-group-item">
-        <h6 class="list-header"  onClick="retrieveChapter({{ chapter.id }})">{{ chapter.chapter_title }}</h6>
-    </li>
-    {% endfor %}
-    </ul>
+    <ul class="list-group list-group-flush horizontal" id="books">
+        {% for chapter in book.book_chapters %}
+            {% if bookmarkedChapters %}
+                {% if chapter.id in bookmarkedChapters%}
+                    <li class="d-flex list-group-item active">
+                        <div class="m-2 d-flex align-self-center">
+                            <i class="fa-solid fa-bookmark"></i>
+                        </div>
+                        <h6 class="m-2 justify-content-center align-self-center" onClick="retrieveChapter({{ chapter.id }});addLastchapter({{chapter.book_id}}, {{chapter.id}});">{{ chapter.chapter_title }}</h6>
+                    </li>
+                {% else %}
+                <li class="d-flex list-group-item">
+                    <h6 class="m-2 justify-content-center align-self-center" onClick="retrieveChapter({{ chapter.id }});addLastchapter({{chapter.book_id}}, {{chapter.id}});">{{ chapter.chapter_title }}</h6>
+                </li>
+                {% endif %}
+            {% else %}
+                <li class="d-flex list-group-item">
+                    <h6 class="m-2 justify-content-center align-self-center" onClick="retrieveChapter({{ chapter.id }});addLastchapter({{chapter.book_id}}, {{chapter.id}});">{{ chapter.chapter_title }}</h6>
+                </li>
+            {% endif %}
+        {% endfor %}
+        </ul>
 </div>
 
 

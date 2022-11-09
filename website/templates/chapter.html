@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block title %} {{chapter.chapter_title}} {% endblock %}
 {% block content %}
-<h5 align="center">home / {{book.book_title}} / {{chapter.chapter_title}} <i class="fa-solid fa-bookmark" onclick='bookMark({{book.id}})'></i></h5>
-
+<h5 align="center">home / {{book.book_title}} / {{chapter.chapter_title}}</h5>
+<div align="center">
+    <button type="button" onclick='bookmarkChapter({{chapter.book_id}}, {{chapter.id}})'><i class="fa-solid fa-bookmark"> Bookmark Chapter</i></button>
+</div>
 <br>
 <br>
 <br>
