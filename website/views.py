@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import redirect
 from website import db
 from website.auth import verification
-from website.models import Book, User, BookChapters, BookGenres, Library, BookHistory
+from website.models import Book, User, BookChapters, BookGenres, Library, BookHistory, BookmarkedChapters
 import json
 # This file SHOULD contain all Routes/Views that a non signed in user can see
 
@@ -73,7 +73,8 @@ def profile_post_methods():
         new_password = request.form.get('new-password')
         user = User.query.filter_by(email=current_user.email).first()
         if user and check_password_hash(user.password, existing_password):
-            user.password = generate_password_hash(new_password, method='sha256')
+            user.password = generate_password_hash(
+                new_password, method='sha256')
             db.session.commit()
             flash("password has been updated", category="success")
         else:
@@ -176,8 +177,10 @@ def author_book_page():
         chapter_title = request.form.get('chapter-title')
         context = request.form.get('chapter-context')
         book_id = book.id
-        existing_chapters = BookChapters.query.filter_by(chapter_title=chapter_title).first()
-        chapter = BookChapters(chapter_title=chapter_title, context=context, book_id=book_id)
+        existing_chapters = BookChapters.query.filter_by(
+            chapter_title=chapter_title).first()
+        chapter = BookChapters(chapter_title=chapter_title,
+                               context=context, book_id=book_id)
         if existing_chapters:
             flash("chapter has failed to upload", category="error")
         else:
@@ -192,26 +195,34 @@ def simulator_page():
     verification()
     book = Book.query.get(request.args.get("bookId"))
     chapters = BookChapters.query.filter_by(book_id="bookId")
-    book_genres = BookGenres.query.filter_by(book_id=(request.args.get("bookId"))).first()
-    da_book_genres = BookGenres.query.filter_by(book_id=(request.args.get("bookId"))).first().toString()
+    book_genres = BookGenres.query.filter_by(
+        book_id=(request.args.get("bookId"))).first()
+    da_book_genres = BookGenres.query.filter_by(
+        book_id=(request.args.get("bookId"))).first().toString()
     # print("columns")
     # print(BookGenres.__table__.columns.keys())
     if da_book_genres is None:
         da_book_genres = ''
     if request.method == 'GET':
         if current_user.is_authenticated:
+            bookmarkedChapters = []
+            for chapter in db.engine.execute(f"SELECT * FROM bookmarkedchapters WHERE user_id='{current_user.id}' AND book_id='{book.id}'"):
+                bookmarkedChapters.append(chapter.chapter_id)
             if current_user.id == book.author:
-                return render_template("simulator.html", user=current_user, book=book, chapters=chapters, book_genres=da_book_genres)
+                return render_template("simulator.html", user=current_user, book=book, chapters=chapters, book_genres=da_book_genres, bookmarkedChapters=bookmarkedChapters)
             else:
-                return render_template("viewer_book_page.html", user=current_user, book=book)
+                return render_template("viewer_book_page.html", user=current_user, book=book, bookmarkedChapters=bookmarkedChapters)
         else:
-            return render_template("viewer_book_page.html", user=current_user, book=book, book_genres=da_book_genres)
+            bookmarkedChapters = []
+            return render_template("viewer_book_page.html", user=current_user, book=book, book_genres=da_book_genres, bookmarkedChapters=bookmarkedChapters)
     if request.method == 'POST':
         chapter_title = request.form.get('chapter-title')
         context = request.form.get('chapter-context')
         book_id = book.id
-        existing_chapters = BookChapters.query.filter_by(chapter_title=chapter_title).first()
-        chapter = BookChapters(chapter_title=chapter_title, context=context, book_id=book_id)
+        existing_chapters = BookChapters.query.filter_by(
+            chapter_title=chapter_title).first()
+        chapter = BookChapters(chapter_title=chapter_title,
+                               context=context, book_id=book_id)
         if existing_chapters:
             flash("chapter has failed to upload", category="error")
         else:
@@ -246,14 +257,43 @@ def reset_page():
     return render_template("password_reset.html", user=current_user)
 
 
+@views.route('bookmark-chapter', methods=['POST'])
+def bookmark_chapter():
+    bookmark = json.loads(request.data)
+    print(bookmark)
+    bookId = bookmark['bookId']
+    chapterId = bookmark['chapterId']
+    book = Book.query.get(bookId)
+    if book:
+        chapter = BookChapters.query.get(chapterId)
+        if chapter:
+            existing_chapter_bookmarked = BookmarkedChapters.query.filter_by(
+                book_id=bookId, chapter_id=chapterId, user_id=current_user.id).first()
+            if existing_chapter_bookmarked:
+                db.session.delete(existing_chapter_bookmarked)
+                db.session.commit()
+                flash('Chapter bookmark removed.', category='success')
+            else:
+                insert_request = BookmarkedChapters(
+                    chapter_id=chapterId, book_id=bookId, user_id=current_user.id
+                )
+                db.session.add(insert_request)
+                db.session.commit()
+                flash('Chapter has been successfully bookmarked!',
+                      category='success')
+    return jsonify({})
+
+
 @views.route('bookmark-book', methods=['POST'])
 def bookmark_book():
     bookmark = json.loads(request.data)
     bookId = bookmark['bookId']
     book = Book.query.get(bookId)
     if book:
-        insert_request = Library(book_title=book.book_title, book_id=bookId, user_id=current_user.id)
-        existing_book_in_library = Library.query.filter_by(book_id=bookId, user_id=current_user.id).first()
+        insert_request = Library(
+            book_title=book.book_title, book_id=bookId, user_id=current_user.id)
+        existing_book_in_library = Library.query.filter_by(
+            book_id=bookId, user_id=current_user.id).first()
         if existing_book_in_library:
             db.session.delete(existing_book_in_library)
             db.session.commit()
@@ -274,12 +314,14 @@ def add_book_read_history(bid):
     db.session.commit()
     return jsonify({'msg': 'history added'})
 
+
 @views.route('/bookhistory', methods=['GET'])
 def bookhistory_page():
     verification()
     books = []
     for history in db.engine.execute(f"SELECT * FROM bookhistory WHERE user_id='{current_user.id}'"):
-        book = db.session.query(Book).filter(Book.id == history.book_id).first()
+        book = db.session.query(Book).filter(
+            Book.id == history.book_id).first()
         if hasattr(history, "last_chapter"):
             book.last_chapter = str(history.last_chapter)
         books.append(book)

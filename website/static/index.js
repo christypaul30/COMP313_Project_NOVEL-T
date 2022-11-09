@@ -13,7 +13,16 @@ function bookMark(bookId){
         method: 'POST',
         body: JSON.stringify({ bookId:bookId })
     }).then((_res) => {
-    window.location.reload();
+        window.location.reload();
+    });
+}
+
+function bookmarkChapter(bookId, chapterId){
+    fetch('/bookmark-chapter', {
+        method: 'POST',
+        body: JSON.stringify({ bookId: bookId, chapterId:chapterId})
+    }).then((_res) =>{
+        window.location.reload();
     });
 }
 

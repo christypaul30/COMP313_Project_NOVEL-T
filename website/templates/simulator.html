@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block title %} Book {% endblock %}
 {% block content %}
-<h4 align="center">{{book.book_title}}  <i class="fa-solid fa-bookmark" onclick="bookMark({{book.id}})"></i></h4>
+<h4 align="center">{{book.book_title}}</h4>
+<div align="center">
+    <button type="button" onclick="bookMark({{book.id}})"><i class="fa-solid fa-bookmark"> Bookmark Book</i></button>
+</div>
 <hr>
 <br>
 <div>
@@ -50,22 +53,54 @@
 <div>
     <h3 align="center"> Book Summary </h3>
     <hr>
-    <p align="left">{% print(book.prologue) %}</p>
+    <p align="center">{% print(book.prologue) %}</p>
 </div>
 <br>
 <br>
 <div class="w3-container">
-    <h3 align="center"> Book Chapters </h3><button class="btn btn-success" onclick="displayModal(document.getElementById('add-chapter-modal'))">+</button>
+    <div class="container d-flex justify-content-center align-self-center">
+        <h3 class="mx-1"> Book Chapters </h3>
+        <button class="btn btn-success mx-1" onclick="displayModal(document.getElementById('add-chapter-modal'))">Add Chapter</button>
+    </div>
     <hr>
-    <ul class="list-group list-group-flush" id="books">
+    <ul class="list-group list-group-flush horizontal" id="books">
     {% for chapter in book.book_chapters %}
-    <li class="list-group-item">
-        <h6 class="list-header"  onClick="retrieveChapter({{ chapter.id }});addLastchapter({{chapter.book_id}}, {{chapter.id}});">{{ chapter.chapter_title }}</h6>
-        <button type="button" class="btn btn-warning" onClick="editChapter{{chapter.book_id, chapter.id}}" id="edit-modal">edit chapter</button>
-        <button type="button" class="close" onClick="deleteChapter{{chapter.book_id, chapter.id}}" id="delete">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </li>
+        {% if bookmarkedChapters %}
+            {% if chapter.id in bookmarkedChapters%}
+                <li class="d-flex list-group-item active justify-content-center ">
+                    <div class="m-2 d-flex align-self-center">
+                        <i class="fa-solid fa-bookmark"></i>
+                    </div>
+                    <h6 class="m-2 justify-content-center align-self-center" onClick="retrieveChapter({{ chapter.id }});addLastchapter({{chapter.book_id}}, {{chapter.id}});">{{ chapter.chapter_title }}</h6>
+                    <div class="m-2 d-flex align-self-center">
+                        <button type="button" class="btn btn-warning" onClick="editChapter{{chapter.book_id, chapter.id}}" id="edit-modal">edit chapter</button>
+                    </div>
+                    <div class="d-flex align-self-center ml-auto">
+                        <button type="button" class="close " onClick="deleteChapter{{chapter.book_id, chapter.id}}" id="delete">&times;</button>
+                    </div>
+                </li>
+            {% else %}
+            <li class="d-flex list-group-item">
+                <h6 class="m-2 justify-content-center align-self-center" onClick="retrieveChapter({{ chapter.id }});addLastchapter({{chapter.book_id}}, {{chapter.id}});">{{ chapter.chapter_title }}</h6>
+                <div class="m-2 d-flex align-self-center">
+                    <button type="button" class="btn btn-warning" onClick="editChapter{{chapter.book_id, chapter.id}}" id="edit-modal">edit chapter</button>
+                </div>
+                <div class="ml-auto d-flex align-self-center">
+                    <button type="button" class="close " onClick="deleteChapter{{chapter.book_id, chapter.id}}" id="delete">&times;</button>
+                </div>
+            </li>
+            {% endif %}
+        {% else %}
+            <li class="d-flex list-group-item">
+                <h6 class="m-2 justify-content-center align-self-center" onClick="retrieveChapter({{ chapter.id }});addLastchapter({{chapter.book_id}}, {{chapter.id}});">{{ chapter.chapter_title }}</h6>
+                <div class="m-2 d-flex align-self-center">
+                    <button type="button" class="btn btn-warning" onClick="editChapter{{chapter.book_id, chapter.id}}" id="edit-modal">edit chapter</button>
+                </div>
+                <div class="ml-auto d-flex align-self-center">
+                    <button type="button" class="close " onClick="deleteChapter{{chapter.book_id, chapter.id}}" id="delete">&times;</button>
+                </div>
+            </li>
+        {% endif %}
     {% endfor %}
     </ul>
 </div>
