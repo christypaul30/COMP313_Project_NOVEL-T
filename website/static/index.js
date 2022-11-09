@@ -94,3 +94,17 @@ function addBookhistory(bookId){
 function addLastchapter(bookId, chapterId) {
     fetch(`/bookhistory/${bookId}/${chapterId}`);
 }
+
+
+//Share button functionality - Steven Chen
+function shareButton(){
+    // grabs link from current website window
+    var link = window.location.href;
+    // copies link to clipboard
+    navigator.clipboard.writeText(link);
+}
+
+// Activate Tooltip for buttons - Steven Chen
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
