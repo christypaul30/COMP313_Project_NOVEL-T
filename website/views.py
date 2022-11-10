@@ -192,7 +192,6 @@ def author_book_page():
 
 @views.route('simulator', methods=['POST', 'GET'])
 def simulator_page():
-    verification()
     book = Book.query.get(request.args.get("bookId"))
     chapters = BookChapters.query.filter_by(book_id="bookId")
     book_genres = BookGenres.query.filter_by(
@@ -259,49 +258,57 @@ def reset_page():
 
 @views.route('bookmark-chapter', methods=['POST'])
 def bookmark_chapter():
-    bookmark = json.loads(request.data)
-    print(bookmark)
-    bookId = bookmark['bookId']
-    chapterId = bookmark['chapterId']
-    book = Book.query.get(bookId)
-    if book:
-        chapter = BookChapters.query.get(chapterId)
-        if chapter:
-            existing_chapter_bookmarked = BookmarkedChapters.query.filter_by(
-                book_id=bookId, chapter_id=chapterId, user_id=current_user.id).first()
-            if existing_chapter_bookmarked:
-                db.session.delete(existing_chapter_bookmarked)
-                db.session.commit()
-                flash('Chapter bookmark removed.', category='success')
-            else:
-                insert_request = BookmarkedChapters(
-                    chapter_id=chapterId, book_id=bookId, user_id=current_user.id
-                )
-                db.session.add(insert_request)
-                db.session.commit()
-                flash('Chapter has been successfully bookmarked!',
-                      category='success')
+    if current_user.is_authenticated:
+        bookmark = json.loads(request.data)
+        print(bookmark)
+        bookId = bookmark['bookId']
+        chapterId = bookmark['chapterId']
+        book = Book.query.get(bookId)
+        if book:
+            chapter = BookChapters.query.get(chapterId)
+            if chapter:
+                existing_chapter_bookmarked = BookmarkedChapters.query.filter_by(
+                    book_id=bookId, chapter_id=chapterId, user_id=current_user.id).first()
+                if existing_chapter_bookmarked:
+                    db.session.delete(existing_chapter_bookmarked)
+                    db.session.commit()
+                    flash('Chapter bookmark removed.', category='success')
+                else:
+                    insert_request = BookmarkedChapters(
+                        chapter_id=chapterId, book_id=bookId, user_id=current_user.id
+                    )
+                    db.session.add(insert_request)
+                    db.session.commit()
+                    flash('Chapter has been successfully bookmarked!',
+                          category='success')
+    else:
+        flash('You must be logged in first to bookmark chapters!',
+              category='error')
     return jsonify({})
 
 
 @views.route('bookmark-book', methods=['POST'])
 def bookmark_book():
-    bookmark = json.loads(request.data)
-    bookId = bookmark['bookId']
-    book = Book.query.get(bookId)
-    if book:
-        insert_request = Library(
-            book_title=book.book_title, book_id=bookId, user_id=current_user.id)
-        existing_book_in_library = Library.query.filter_by(
-            book_id=bookId, user_id=current_user.id).first()
-        if existing_book_in_library:
-            db.session.delete(existing_book_in_library)
-            db.session.commit()
-            flash('book removed from personal library', category='success')
-        else:
-            db.session.add(insert_request)
-            db.session.commit()
-            flash('book added to personal library', category='success')
+    if current_user.is_authenticated:
+        bookmark = json.loads(request.data)
+        bookId = bookmark['bookId']
+        book = Book.query.get(bookId)
+        if book:
+            insert_request = Library(
+                book_title=book.book_title, book_id=bookId, user_id=current_user.id)
+            existing_book_in_library = Library.query.filter_by(
+                book_id=bookId, user_id=current_user.id).first()
+            if existing_book_in_library:
+                db.session.delete(existing_book_in_library)
+                db.session.commit()
+                flash('book removed from personal library', category='success')
+            else:
+                db.session.add(insert_request)
+                db.session.commit()
+                flash('book added to personal library', category='success')
+    else:
+        flash('You must be logged in first to bookmark books!',
+              category='error')
     return jsonify({})
 
 
