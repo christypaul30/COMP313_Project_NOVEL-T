@@ -117,3 +117,10 @@ function shareButton(){
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
+
+function gotoNextPrev(id) {
+    if (id) {
+        window.location.href = "view-chapter?chapter=" + id;
+    }
+
+}
