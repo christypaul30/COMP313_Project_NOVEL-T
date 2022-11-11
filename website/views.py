@@ -18,7 +18,10 @@ def chapter_page():
     chapter_id = request.args.get('chapter')
     chapter = BookChapters.query.filter_by(id=chapter_id).first()
     book = Book.query.filter_by(id=chapter.book_id).first()
-    return render_template('chapter.html', user=current_user, chapter=chapter, book=book)
+    next_object = BookChapters.query.filter(BookChapters.id.__gt__(chapter_id)).order_by('id').first()
+    prev_object = BookChapters.query.filter(BookChapters.id.__lt__(chapter_id)).order_by(desc('id')).first()
+    return render_template('chapter.html', user=current_user, chapter=chapter, next_object=next_object
+                           , prev_object=prev_object, book=book)
 
 
 @views.route("edit-chapter", methods=['POST', 'GET'])
