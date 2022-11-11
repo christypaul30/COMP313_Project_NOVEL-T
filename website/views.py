@@ -259,81 +259,93 @@ def reset_page():
 
 @views.route('bookmark-chapter', methods=['POST'])
 def bookmark_chapter():
-    bookmark = json.loads(request.data)
-    print(bookmark)
-    bookId = bookmark['bookId']
-    chapterId = bookmark['chapterId']
-    book = Book.query.get(bookId)
-    if book:
-        chapter = BookChapters.query.get(chapterId)
-        if chapter:
-            existing_chapter_bookmarked = BookmarkedChapters.query.filter_by(
-                book_id=bookId, chapter_id=chapterId, user_id=current_user.id).first()
-            if existing_chapter_bookmarked:
-                db.session.delete(existing_chapter_bookmarked)
-                db.session.commit()
-                flash('Chapter bookmark removed.', category='success')
-            else:
-                insert_request = BookmarkedChapters(
-                    chapter_id=chapterId, book_id=bookId, user_id=current_user.id
-                )
-                db.session.add(insert_request)
-                db.session.commit()
-                flash('Chapter has been successfully bookmarked!',
-                      category='success')
+    if current_user.is_authenticated:
+        bookmark = json.loads(request.data)
+        print(bookmark)
+        bookId = bookmark['bookId']
+        chapterId = bookmark['chapterId']
+        book = Book.query.get(bookId)
+        if book:
+            chapter = BookChapters.query.get(chapterId)
+            if chapter:
+                existing_chapter_bookmarked = BookmarkedChapters.query.filter_by(
+                    book_id=bookId, chapter_id=chapterId, user_id=current_user.id).first()
+                if existing_chapter_bookmarked:
+                    db.session.delete(existing_chapter_bookmarked)
+                    db.session.commit()
+                    flash('Chapter bookmark removed.', category='success')
+                else:
+                    insert_request = BookmarkedChapters(
+                        chapter_id=chapterId, book_id=bookId, user_id=current_user.id
+                    )
+                    db.session.add(insert_request)
+                    db.session.commit()
+                    flash('Chapter has been successfully bookmarked!',
+                          category='success')
+    else:
+        flash('You must be logged in to bookmark chapters!',
+              category='error')
     return jsonify({})
 
 
 @views.route('bookmark-book', methods=['POST'])
 def bookmark_book():
-    bookmark = json.loads(request.data)
-    bookId = bookmark['bookId']
-    book = Book.query.get(bookId)
-    if book:
-        insert_request = Library(
-            book_title=book.book_title, book_id=bookId, user_id=current_user.id)
-        existing_book_in_library = Library.query.filter_by(
-            book_id=bookId, user_id=current_user.id).first()
-        if existing_book_in_library:
-            db.session.delete(existing_book_in_library)
-            db.session.commit()
-            flash('book removed from personal library', category='success')
-        else:
-            db.session.add(insert_request)
-            db.session.commit()
-            flash('book added to personal library', category='success')
+    if current_user.is_authenticated:
+        bookmark = json.loads(request.data)
+        bookId = bookmark['bookId']
+        book = Book.query.get(bookId)
+        if book:
+            insert_request = Library(
+                book_title=book.book_title, book_id=bookId, user_id=current_user.id)
+            existing_book_in_library = Library.query.filter_by(
+                book_id=bookId, user_id=current_user.id).first()
+            if existing_book_in_library:
+                db.session.delete(existing_book_in_library)
+                db.session.commit()
+                flash('book removed from personal library', category='success')
+            else:
+                db.session.add(insert_request)
+                db.session.commit()
+                flash('book added to personal library', category='success')
+    else:
+        flash('You must be logged in to bookmark books!',
+              category='error')
     return jsonify({})
 
 
 @views.route('/bookhistory/<bid>', methods=['GET'])
 def add_book_read_history(bid):
-    verification()
-    if db.session.query(BookHistory).filter(BookHistory.book_id == bid, BookHistory.user_id == current_user.id).first():
-        return jsonify({'msg': 'history exists'})
-    db.session.add(BookHistory(bid, current_user.id))
-    db.session.commit()
-    return jsonify({'msg': 'history added'})
+    if current_user.is_authenticated:
+        if db.session.query(BookHistory).filter(BookHistory.book_id == bid, BookHistory.user_id == current_user.id).first():
+            return jsonify({'msg': 'history exists'})
+        db.session.add(BookHistory(bid, current_user.id))
+        db.session.commit()
+        return jsonify({'msg': 'history added'})
 
 
 @views.route('/bookhistory', methods=['GET'])
 def bookhistory_page():
-    verification()
-    books = []
-    for history in db.engine.execute(f"SELECT * FROM bookhistory WHERE user_id='{current_user.id}'"):
-        book = db.session.query(Book).filter(
-            Book.id == history.book_id).first()
-        if hasattr(history, "last_chapter"):
-            book.last_chapter = str(history.last_chapter)
-        books.append(book)
-    return render_template("book_history.html", user=current_user, books=books)
+    if current_user.is_authenticated:
+        books = []
+        for history in db.engine.execute(f"SELECT * FROM bookhistory WHERE user_id='{current_user.id}'"):
+            book = db.session.query(Book).filter(
+                Book.id == history.book_id).first()
+            if hasattr(history, "last_chapter"):
+                book.last_chapter = str(history.last_chapter)
+            books.append(book)
+        return render_template("book_history.html", user=current_user, books=books)
+    else:
+        flash('You must be logged in to check the book history!',
+              category='error')
+        return redirect("/")
 
 
 @views.route('/bookhistory/<bid>/<cid>', methods=['GET'])
 def add_last_chapter(bid, cid):
-    verification()
-    h = db.session.query(BookHistory).filter(
-        BookHistory.book_id == bid, BookHistory.user_id == current_user.id
-    ).first()
-    h.last_chapter = cid
-    db.session.commit()
-    return jsonify({'msg': 'last chapter updated'})
+    if current_user.is_authenticated:
+        h = db.session.query(BookHistory).filter(
+            BookHistory.book_id == bid, BookHistory.user_id == current_user.id
+        ).first()
+        h.last_chapter = cid
+        db.session.commit()
+        return jsonify({'msg': 'last chapter updated'})
