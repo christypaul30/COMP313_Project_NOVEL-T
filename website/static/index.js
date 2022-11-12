@@ -123,13 +123,13 @@ $(function () {
     let password = $("#password1").val();
     let passwordConfirm = $("#password2").val();
     let email = $("#email").val()
-    if(username.length < 3){
-        $("#modalContent").text("Name must me greater than 3 characters");
+    if(email.length < 7){
+        $("#modalContent").text("The email must be greater than 7 characters");
         $("#modal").modal("show");
         return ;
     }
-    if(email.length < 7){
-        $("#modalContent").text("The email must be greater than 7 characters");
+    if(username.length < 3){
+        $("#modalContent").text("Name must be greater than 3 characters");
         $("#modal").modal("show");
         return ;
     }

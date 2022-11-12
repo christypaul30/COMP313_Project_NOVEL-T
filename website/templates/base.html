@@ -42,9 +42,10 @@
                     </button>
                 </form>
             </ul>
+            {% if user.is_authenticated %}
             <ul class="nav navbar-nav">
 
-                {% if user.is_authenticated %}
+                
                 <a class="nav-item nav-link" id="stats-page" href="/stats-page">Stats Page</a>
                 <a class="nav-item nav-link" id="home-page" href="/">Home Page</a>
 
@@ -69,7 +70,7 @@
             </ul>
                 {% else %}
             <!--- IDE is incorrect </ul> is needed for else statement otherwise nav dropdown would not align properly (error if aligned left on navbar) >--->
-            </ul>
+            
                 <ul class="navbar-nav ml-auto" >
                     <a class="account-dropdown">
                         <a class="dropdown-toggle"
