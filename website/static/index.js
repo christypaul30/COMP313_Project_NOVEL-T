@@ -117,3 +117,31 @@ function shareButton(){
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
+  document.getElementById("registerForm").addEventListener("submit",(e)=>{
+    e.preventDefault();
+    let username = $("#username").val();
+    let password = $("#password1").val();
+    let passwordConfirm = $("#password2").val();
+    let email = $("#email").val()
+    if(email.length < 7){
+        $("#modalContent").text("The email must be greater than 7 characters");
+        $("#modal").modal("show");
+        return ;
+    }
+    if(username.length < 3){
+        $("#modalContent").text("Name must be greater than 3 characters");
+        $("#modal").modal("show");
+        return ;
+    }
+    if(password.length < 8){
+        $("#modalContent").text("The password must be greater than 8 characters");
+        $("#modal").modal("show");
+        return ;
+    }
+    if(password != passwordConfirm){
+        $("#modalContent").text("passwords do not match");
+        $("#modal").modal("show");
+        return ;
+    }
+    e.target.submit();
+})

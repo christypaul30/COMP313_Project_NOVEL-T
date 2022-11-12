@@ -42,9 +42,10 @@
                     </button>
                 </form>
             </ul>
+            {% if user.is_authenticated %}
             <ul class="nav navbar-nav">
 
-                {% if user.is_authenticated %}
+                
                 <a class="nav-item nav-link" id="stats-page" href="/stats-page">Stats Page</a>
                 <a class="nav-item nav-link" id="home-page" href="/">Home Page</a>
 
@@ -69,7 +70,7 @@
             </ul>
                 {% else %}
             <!--- IDE is incorrect </ul> is needed for else statement otherwise nav dropdown would not align properly (error if aligned left on navbar) >--->
-            </ul>
+            
                 <ul class="navbar-nav ml-auto" >
                     <a class="account-dropdown">
                         <a class="dropdown-toggle"
@@ -86,6 +87,24 @@
                 </ul>
         </div>
     </nav>
+    <div class="modal fade" id="modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Wrong Input</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="modalContent">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <div class="w3-container">
       <div id="id01" class="w3-modal">
         <div class="w3-modal-content w3-card-4 w3-animate-opacity" style="max-width:400px">
@@ -111,17 +130,17 @@
                 </form>
             </div>
             <div id="form-register" class="w3-container modalStuff">
-                <form class="w3-container" method="post">
+                <form class="w3-container" method="post" id="registerForm">
                     <div class="w3-section">
                         <p><b>Email Address</b></p>
-                        <input type="email" class="form-control" name="email" placeholder="Enter email"/><br>
-                        <label for="username"><b>User Name</b></label>
+                        <input type="email" id="email" class="form-control" name="email" placeholder="Enter email"/><br>
+                        <label for="username" ><b>User Name</b></label>
                         <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username"/><br>
-                        <label for="password1"><b>Password</b></label>
+                        <label for="password1" ><b>Password</b></label>
                         <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter Password"/><br>
-                        <label for="password2"><b>Re-enter Password</b></label>
+                        <label for="password2" ><b>Re-enter Password</b></label>
                         <input type="password" class="form-control" id="password2" name="password2" placeholder="Re-enter Password"/><br>
-                        <button class="w3-button w3-block w3-green w3-section w3-padding" href="/sign_up" type="submit" >Create Account</button>
+                        <button class="w3-button w3-block w3-green w3-section w3-padding"  type="submit" >Create Account</button>
                         <input type="hidden" id="form2" name="type" value="register">
                     </div>
                 </form>
