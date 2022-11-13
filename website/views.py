@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, flash, session, url_for
 from flask_login import login_required, current_user
-from sqlalchemy import func
+from sqlalchemy import func, desc
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import redirect
 from website import db
@@ -18,7 +18,10 @@ def chapter_page():
     chapter_id = request.args.get('chapter')
     chapter = BookChapters.query.filter_by(id=chapter_id).first()
     book = Book.query.filter_by(id=chapter.book_id).first()
-    return render_template('chapter.html', user=current_user, chapter=chapter, book=book)
+    next_object = BookChapters.query.filter(BookChapters.id.__gt__(chapter_id)).order_by(BookChapters.id).first()
+    prev_object = BookChapters.query.filter(BookChapters.id.__lt__(chapter_id)).order_by(BookChapters.id.desc()).first()
+    return render_template('chapter.html', user=current_user, chapter=chapter, next_object=next_object
+                           , prev_object=prev_object, book=book)
 
 
 @views.route("edit-chapter", methods=['POST', 'GET'])

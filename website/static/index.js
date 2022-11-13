@@ -145,3 +145,10 @@ $(function () {
     }
     e.target.submit();
 })
+
+function gotoNextPrev(id) {
+    if (id) {
+        window.location.href = "view-chapter?chapter=" + id;
+    }
+
+}
