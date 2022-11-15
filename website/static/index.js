@@ -7,6 +7,11 @@ function displayModal(element){
     }
 }
 
+// Comment Section - Christine Kweri
+function postComment(commenter,comment){
+    document.getElementById('comment-section').innerHTML += "Comment by <b>" +commenter+ "</b> <br> <i>" + comment + "</i> <br><br>";
+}
+
 function bookMark(bookId){
     console.log(bookId)
     fetch('/bookmark-book', {

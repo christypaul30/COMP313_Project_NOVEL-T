@@ -104,14 +104,13 @@
     {% endfor %}
     </ul>
 </div>
-<div class="w3-container">
-    <textarea class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
-    <button class="btn btn-success mx-1" id="post" onclick="comment">Post comment</button>
-
-    <ul id="unordered">
-
-    </ul>
-
+<div id="comment-section">
+    <form>
+        <input id="commenter" class="w3-container" placeholder="Enter your name here...">
+        <textarea placeholder="Enter your comment here..." class="form-control" id="comment" rows="4" style="background: #fff;"></textarea>
+        <button class="btn btn-success mx-1" id="post"  type="button" value="Send Form" onclick="postComment(document.getElementById('commenter').value,document.getElementById('comment').value)">Post comment</button>
+        <p id="comment"> </p>
+    </form>
     <hr>
 </div>
 
