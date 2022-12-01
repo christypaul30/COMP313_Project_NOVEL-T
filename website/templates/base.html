@@ -17,7 +17,7 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
     />
-    <title>{% block title %}url page title{% endblock %}</title>
+    <title >{% block title %}url page title{% endblock %}</title>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg">
@@ -36,23 +36,35 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="search-container">
                 <form method="POST">
-                <input type="text" placeholder="Search.." name="search_string">
+                <input type="text" placeholder="Search..." data-i18n-french="Recherche..." data-i18n-en="Search..."  name="search_string">
                 <button>
                     <input type="submit" name="type" value="search">
                     </button>
                 </form>
             </ul>
+
+            
             {% if user.is_authenticated %}
             <ul class="nav navbar-nav">
 
                 
-                <a class="nav-item nav-link" id="stats-page" href="/stats-page">Stats Page</a>
-                <a class="nav-item nav-link" id="home-page" href="/">Home Page</a>
+                <a class="nav-item nav-link" id="stats-page" href="/stats-page" data-i18n-french="Page de Stats">Stats Page</a>
+                <a class="nav-item nav-link" id="home-page" href="/" data-i18n-french="Page d'accueil">Home Page</a>
 
             </ul>
 
             <ul class="navbar-nav ml-auto" >
-                <a class="account-dropdown">
+                <div class="dropdown" style="margin-right: 20px;">
+                  <a class="dropdown-toggle" type="button" id="dropDownLanguage" data-toggle="dropdown" aria-expanded="false">
+                    English
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropDownLanguage" style="margin-top: 22px;">
+                    <a id="language-item-en" class="nav-item nav-link active" data-i18n-french="Anglais" onclick="changeLanguage('en',this)">English</a>
+                    <a id="language-item-french" class="nav-item nav-link"  data-i18n-french="Français" onclick="changeLanguage('french',this)">French</a>
+                  </div>
+                </div>
+
+                <div class="account-dropdown">
                     <a class="dropdown-toggle"
                             id="account_drop_down_menu_authenticated"
                             data-toggle="dropdown"
@@ -61,29 +73,41 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="account_drop_down_menu_btn">
-                        <a class="nav-item nav-link" id="profile" href="/profile">Account Settings</a>
-                        <a class="nav-item nav-link" id="book" href="/book">Add/Edit book</a>
-                        <a class="nav-item nav-link" id="book" href="/bookhistory">Book History</a>
-                        <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                        <a class="nav-item nav-link" id="profile" href="/profile" data-i18n-french="Paramètres du compte">Account Settings</a>
+                        <a class="nav-item nav-link" id="book" href="/book" data-i18n-french="Ajouter/modifier un livre">Add/Edit book</a>
+                        <a class="nav-item nav-link" id="book" href="/bookhistory" data-i18n-french="Histoire du livre">Book History</a>
+                        <a class="nav-item nav-link" id="logout" href="/logout" data-i18n-french="Déconnexion">Logout</a>
                     </div>
-                </a>
+                </div>
             </ul>
                 {% else %}
             <!--- IDE is incorrect </ul> is needed for else statement otherwise nav dropdown would not align properly (error if aligned left on navbar) >--->
             
                 <ul class="navbar-nav ml-auto" >
-                    <a class="account-dropdown">
+                  <div class="dropdown" style="margin-right: 20px;">
+                    <a class="dropdown-toggle" type="button" id="dropDownLanguage" 
+                    data-toggle="dropdown" 
+                    aria-expanded="false">
+                      English
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropDownLanguage" style="margin-top: 22px;">
+                      <a id="language-item-en" class="nav-item nav-link active" data-i18n-french="Anglais" onclick="changeLanguage('en',this)">English</a>
+                      <a id="language-item-french" class="nav-item nav-link"  data-i18n-french="Français" onclick="changeLanguage('french',this)">French</a>
+                    </div>
+                  </div>
+                    <div class="account-dropdown">
                         <a class="dropdown-toggle"
                                 id="account_drop_down_menu_un-authenticated"
                                 data-toggle="dropdown"
                                 aria-haspopup="true"
-                                aria-expanded="false">My Account
+                                aria-expanded="false"
+                                data-i18n-french="Mon compte">My Account
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="account_drop_down_menu_btn">
-                            <a class="nav-item nav-link" onclick="document.getElementById('id01').style.display='block'">Login /  Sign-up</a>
+                            <a class="nav-item nav-link" onclick="document.getElementById('id01').style.display='block'" data-i18n-french="Connexion / Inscription">Login /  Sign-up</a>
                         </div>
                         {% endif %}
-                    </a>
+                    </div>
                 </ul>
         </div>
     </nav>
@@ -91,7 +115,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="modalLabel">Wrong Input</h5>
+              <h5 class="modal-title" id="modalLabel" data-i18n-french="Entrée erronée">Wrong Input</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -113,18 +137,18 @@
                 <img src="static/emptybook.png" style="width:30%" class="w3-circle w3-margin-top">
             </div>
             <div class="w3-bar w3-border-bottom">
-                <button class="tablink w3-bar-item w3-button" onclick="openModal(event, 'form-login')">Login</button>
-                <button class="tablink w3-bar-item w3-button" onclick="openModal(event, 'form-register')">Register</button>
+                <button class="tablink w3-bar-item w3-button" onclick="openModal(event, 'form-login')" data-i18n-french="Connexion">Login</button>
+                <button class="tablink w3-bar-item w3-button" onclick="openModal(event, 'form-register')" data-i18n-french="Registre">Register</button>
             </div>
             <div id="form-login" class="w3-container modalStuff">
                 <form class="w3-container" method="post">
                     <div class="w3-section">
-                        <label for="modal-email"><b>Email Address</b></label>
-                        <input type="email" class="w3-input w3-border w3-margin-bottom" id="modal-email" name="email" placeholder="Enter email/Username"/>
-                        <label><b>Password</b></label>
-                        <input class="w3-input w3-border" type="password" placeholder="Enter Password" name="password" required>
+                        <label for="modal-email"><b data-i18n-french="Adresse électronique" >Email Address</b></label>
+                        <input type="email" class="w3-input w3-border w3-margin-bottom" id="modal-email" name="email" data-i18n-french="Entrez l'email" placeholder="Enter email/Username"/>
+                        <label><b data-i18n-french="Mot de passe">Password</b></label>
+                        <input class="w3-input w3-border" type="password" placeholder="Enter Password" data-i18n-french="Entrez le mot de passe" name="password" required>
                          <br>
-                        <button class="w3-button w3-block w3-green w3-section w3-padding" href="/login" type="submit" >Login</button>
+                        <button class="w3-button w3-block w3-green w3-section w3-padding" href="/login" type="submit" data-i18n-french="Connexion">Login</button>
                         <input type="hidden" id="form1" name="type" value="login">
                     </div>
                 </form>
@@ -132,22 +156,22 @@
             <div id="form-register" class="w3-container modalStuff">
                 <form class="w3-container" method="post" id="registerForm">
                     <div class="w3-section">
-                        <p><b>Email Address</b></p>
-                        <input type="email" id="email" class="form-control" name="email" placeholder="Enter email"/><br>
-                        <label for="username" ><b>User Name</b></label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username"/><br>
-                        <label for="password1" ><b>Password</b></label>
-                        <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter Password"/><br>
-                        <label for="password2" ><b>Re-enter Password</b></label>
-                        <input type="password" class="form-control" id="password2" name="password2" placeholder="Re-enter Password"/><br>
-                        <button class="w3-button w3-block w3-green w3-section w3-padding"  type="submit" >Create Account</button>
+                        <p><b data-i18n-french="Adresse électronique">Email Address</b></p>
+                        <input type="email" id="email" class="form-control" name="email" data-i18n-french="Entrez l'email" placeholder="Enter email"/><br>
+                        <label for="username" ><b data-i18n-french="Nom d'utilisateur">User Name</b></label>
+                        <input type="text" class="form-control" id="username" name="username" data-i18n-french="Entrez le nom d'utilisateur" placeholder="Enter Username"/><br>
+                        <label for="password1" ><b data-i18n-french="Mot de passe">Password</b></label>
+                        <input type="password" class="form-control" id="password1" name="password1" data-i18n-french="Entrez le mot de passe" placeholder="Enter Password"/><br>
+                        <label for="password2" ><b data-i18n-french="Saisissez à nouveau le mot de passe">Re-enter Password</b></label>
+                        <input type="password" class="form-control" id="password2" name="password2" data-i18n-french="Saisissez à nouveau le mot de passe" placeholder="Re-enter Password"/><br>
+                        <button class="w3-button w3-block w3-green w3-section w3-padding"  type="submit" data-i18n-french="Créer un compte">Create Account</button>
                         <input type="hidden" id="form2" name="type" value="register">
                     </div>
                 </form>
             </div>
           <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-            <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
-            <span class="w3-right w3-padding w3-hide-small">Forgot <a href="/password_reset.html">password?</a></span>
+            <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red" data-i18n-french="Annuler">Cancel</button>
+            <span class="w3-right w3-padding w3-hide-small" data-i18n-french="J'ai oublié">Forgot <a href="/password_reset.html" data-i18n-french="mot de passe?">password?</a></span>
           </div>
     </div>
   </div>

@@ -145,3 +145,35 @@ $(function () {
     }
     e.target.submit();
 })
+$('[data-i18n-french]').each((index,element)=>{
+    element.setAttribute("data-i18n-en",element.innerText || element.getAttribute("placeholder"));
+})
+if(localStorage.getItem('language')=="french"){
+    changeLanguage('french');
+}
+else if(localStorage.getItem('language')=="en"){
+    changeLanguage('en');
+}
+
+function changeLanguage(language,target){
+    
+    $('[data-i18n-french]').each((index,element)=>{
+        element.innerText = element.getAttribute("data-i18n-"+language);
+        if(element.tagName=="INPUT"){
+            element.setAttribute("placeholder",element.getAttribute("data-i18n-"+language));
+        }
+    })
+    
+    if(language=='en'){
+        $("#dropDownLanguage").text("English");
+        $("#language-item-en").addClass("active");
+        $('#language-item-french').removeClass("active");
+        localStorage.setItem("language",'en');
+    }
+    else{
+        $("#dropDownLanguage").text("Francais");
+        $("#language-item-en").removeClass("active");
+        $('#language-item-french').addClass("active");
+        localStorage.setItem("language",'french');
+    }
+}

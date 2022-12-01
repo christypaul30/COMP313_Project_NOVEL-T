@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block title %} add/edit books {% endblock %}
 {% block content %}
-<h1 align="center"> List of Authors' books</h1>
+<h1 align="center" data-i18n-french="Liste des livres de l'auteur"> List of Authors' books</h1>
 <ul class="list-group list-group-flush" id="books">
 {% for book in user.book %}
     <li class="list-group-item">
         <h6 class="list-header" onclick="retrieveBook({{book.id}})">{{ book.book_title }}</h6>
-        <button type="button" class="btn btn-warning" onClick="editBook({{ book.id }})">edit book details</button>
-        <button type="button" class="btn btn-warning" onClick="retrieveBook({{ book.id }})">edit chapters</button>
+        <button type="button" class="btn btn-warning" onClick="editBook({{ book.id }})" data-i18n-french="éditer les détails du livre">edit book details</button>
+        <button type="button" class="btn btn-warning" onClick="retrieveBook({{ book.id }})" data-i18n-french="chapitres d'édition">edit chapters</button>
         <button type="button" class="close" onClick="deleteBook({{ book.id }})">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -16,7 +16,7 @@
 </ul>
 <br>
 <br>
-<a href="/add_book" class="btn btn-success"> add book </a>
+<a href="/add_book" class="btn btn-success" data-i18n-french="ajouter un livre"> add book </a>
 <!--{% for book in user.book %}-->
 <!--{% print(book.id) %}-->
 <!--{% print(book.book_title) %}-->

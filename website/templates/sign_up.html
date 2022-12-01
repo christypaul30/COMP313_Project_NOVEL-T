@@ -2,29 +2,29 @@
 {% block content %}
 <br>
 <form method="POST">
-  <h5 align="center">Sign Up</h5>
+  <h5 align="center" data-i18n-french="S'inscrire">Sign Up</h5>
   <div class="form-group">
-    <label for="email">Email Address</label>
-    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"/>
+    <label for="email" data-i18n-french="Adresse électronique">Email Address</label>
+    <input type="email" class="form-control" id="email" name="email" data-i18n-french="Entrez l'email" placeholder="Enter email"/>
   </div>
   <div class="form-group">
-    <label for="username">User Name</label>
-    <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username"/>
+    <label for="username" data-i18n-french="Nom d'utilisateur">User Name</label>
+    <input type="text" class="form-control" id="username" name="username" data-i18n-french="Entrez le nom d'utilisateur" placeholder="Enter Username"/>
   </div>
   <div class="form-group">
-    <label for="password1">Password</label>
-    <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter Password"/>
+    <label for="password1" data-i18n-french="Mot de passe">Password</label>
+    <input type="password" class="form-control" id="password1" name="password1" data-i18n-french="Entrez le mot de passe" placeholder="Enter Password"/>
   </div>
   <div class="form-group">
-    <label for="password2">Re-enter Password</label>
-    <input type="password" class="form-control" id="password2" name="password2" placeholder="Re-enter Password"/>
+    <label for="password2" data-i18n-french="Saisissez à nouveau le mot de passe">Re-enter Password</label>
+    <input type="password" class="form-control" id="password2" name="password2" data-i18n-french="Saisissez à nouveau le mot de passe" placeholder="Re-enter Password"/>
   </div>
   <div class="form-group">
-    <label for="security_question">Enter your own security question</label>
-    <input type="text" class="form-control" id="security_question" name="security_question" placeholder="Security Question"/>
-    <input type="text" class="form-control" id="security_answer" name="security_answer" placeholder="Security Question Answer"/>
+    <label for="security_question" data-i18n-french="Saisissez votre propre question de sécurité">Enter your own security question</label>
+    <input type="text" class="form-control" id="security_question" name="security_question" data-i18n-french="Question de sécurité" placeholder="Security Question"/>
+    <input type="text" class="form-control" id="security_answer" name="security_answer" data-i18n-french="Question de sécurité Réponse" placeholder="Security Question Answer"/>
   </div>
   <br />
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary" data-i18n-french="Soumettre">Submit</button>
 </form>
 {% endblock %}

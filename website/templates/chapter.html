@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %} {{chapter.chapter_title}} {% endblock %}
 {% block content %}
-<h5 align="center">home / {{book.book_title}} / {{chapter.chapter_title}}</h5>
+<h5 align="center" data-i18n-french="domicile">home / {{book.book_title}} / {{chapter.chapter_title}}</h5>
 <div align="center">
-    <button type="button" onclick='bookmarkChapter({{chapter.book_id}}, {{chapter.id}})'><i class="fa-solid fa-bookmark"> Bookmark Chapter</i></button>
+    <button type="button" onclick='bookmarkChapter({{chapter.book_id}}, {{chapter.id}})'><i class="fa-solid fa-bookmark" data-i18n-french="Bookmark Chapter"> Bookmark Chapter</i></button>
 </div>
 <br>
 <br>
@@ -23,7 +23,7 @@
 <br>
 <br>
 <div align="center">
-    <button>previous page</button>
-    <button>next page</button>
+    <button data-i18n-french="page précédente">previous page</button>
+    <button data-i18n-french="page suivante">next page</button>
 </div>
 {% endblock %}
