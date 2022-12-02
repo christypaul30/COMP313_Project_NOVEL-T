@@ -4,13 +4,14 @@
 <h5 align="center">home / {{book.book_title}} / {{chapter.chapter_title}}</h5>
 <div align="center">
     <button type="button" onclick='bookmarkChapter({{chapter.book_id}}, {{chapter.id}})'><i class="fa-solid fa-bookmark"> Bookmark Chapter</i></button>
+    <button type="button" id="focusBtn" onclick="focusPage()">Focus Mode</button>
 </div>
 <br>
 <br>
 <br>
 <br>
 <br>
-<div class="form-group" align="center">
+<div class="form-group" id="chapterContent" align="center">
     <p>{{book.book_title}} - {{chapter.chapter_title}}</p>
     <hr>
     <p>{% print(chapter.context) %}</p>

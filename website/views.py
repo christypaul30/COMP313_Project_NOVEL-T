@@ -392,3 +392,9 @@ def deleteComment():
         else:
             flash('Failed to delete comment', category='error')
     return jsonify({})
+@views.route('/contactus', methods=['GET', 'POST'])
+def contact_us_page():
+    if request.method == "POST":
+        flash("Your inquiry has been submitted successfully!", category="success")
+        return redirect(url_for('views.backup_page', user=current_user))
+    return render_template('contact_us.html', user=current_user)
