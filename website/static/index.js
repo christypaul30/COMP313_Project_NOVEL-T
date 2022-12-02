@@ -152,3 +152,15 @@ function gotoNextPrev(id) {
     }
 
 }
+
+function focusPage(){
+    var content = document.getElementById("chapterContent");
+    content.classList.add("content-focused");
+    var button = document.getElementById("focusBtn").setAttribute( "onClick", "javascript: unfocusPage();" );
+}
+
+function unfocusPage(){
+    var content = document.getElementById("chapterContent");
+    content.classList.remove("content-focused");
+    var button = document.getElementById("focusBtn").setAttribute( "onClick", "javascript: focusPage();" );
+}

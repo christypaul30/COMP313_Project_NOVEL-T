@@ -178,3 +178,7 @@ ul.ks-cboxtags li input[type="checkbox"] {
 ul.ks-cboxtags li input[type="checkbox"]:hover + label {
   border: 2px solid green;
 }
+
+.content-focused {
+  box-shadow: 0 0 0 9999px #000000b0;
+}
