@@ -104,7 +104,16 @@
     {% endfor %}
     </ul>
 </div>
-<li> Add a comments section for the book </li>
+<div id="comment-section">
+    <form>
+        <input id="commenter" class="w3-container" placeholder="Enter your name here...">
+        <textarea placeholder="Enter your comment here..." class="form-control" id="comment" rows="4" style="background: #fff;"></textarea>
+        <button class="btn btn-success mx-1" id="post"  type="button" value="Send Form" onclick="postComment(document.getElementById('commenter').value,document.getElementById('comment').value)">Post comment</button>
+        <p id="comment"> </p>
+    </form>
+    <hr>
+</div>
+
 <li> Use database to fill page with chapters in a list/button manner to reroute to page that has chapter context(user reads the book chapter and can navigate to next)</li>
 
 
