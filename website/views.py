@@ -388,7 +388,7 @@ def deleteComment():
         if comment_exist:
             db.session.delete(comment_exist)
             db.session.commit()
-            flash('Chapter bookmark removed.', category='success')
+            flash('Comment deleted.', category='success')
         else:
             flash('Failed to delete comment', category='error')
     return jsonify({})
