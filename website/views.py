@@ -352,3 +352,10 @@ def add_last_chapter(bid, cid):
         h.last_chapter = cid
         db.session.commit()
         return jsonify({'msg': 'last chapter updated'})
+
+@views.route('/contactus', methods=['GET', 'POST'])
+def contact_us_page():
+    if request.method == "POST":
+        flash("Your inquiry has been submitted successfully!", category="success")
+        return redirect(url_for('views.backup_page', user=current_user))
+    return render_template('contact_us.html', user=current_user)
