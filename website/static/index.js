@@ -7,11 +7,6 @@ function displayModal(element){
     }
 }
 
-// Comment Section - Christine Kweri
-function postComment(commenter,comment){
-    document.getElementById('comment-section').innerHTML += "Comment by <b>" +commenter+ "</b> <br> <i>" + comment + "</i> <br><br>";
-}
-
 function bookMark(bookId){
     console.log(bookId)
     fetch('/bookmark-book', {
@@ -156,4 +151,22 @@ function gotoNextPrev(id) {
         window.location.href = "view-chapter?chapter=" + id;
     }
 
+}
+
+function comment(bookId, message){
+    fetch('/post-comment', {
+        method: 'POST',
+        body: JSON.stringify({ bookId: bookId, message: message})
+    }).then((_res) =>{
+        window.location.reload();
+    });
+}
+
+function deleteComment(commentId){
+    fetch('/delete-comment', {
+        method: 'POST',
+        body: JSON.stringify({ commentId: commentId})
+    }).then((_res) =>{
+        window.location.reload();
+    });
 }

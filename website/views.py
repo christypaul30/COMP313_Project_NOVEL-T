@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import redirect
 from website import db
 from website.auth import verification
-from website.models import Book, User, BookChapters, BookGenres, Library, BookHistory, BookmarkedChapters
+from website.models import Book, User, BookChapters, BookGenres, Library, BookHistory, BookmarkedChapters, Comments
 import json
 # This file SHOULD contain all Routes/Views that a non signed in user can see
 
@@ -207,17 +207,20 @@ def simulator_page():
     if da_book_genres is None:
         da_book_genres = ''
     if request.method == 'GET':
+        comments = []
+        for comment in db.engine.execute(f"SELECT * FROM comments WHERE book_id='{book.id}'"):
+                comments.append(comment)
         if current_user.is_authenticated:
             bookmarkedChapters = []
             for chapter in db.engine.execute(f"SELECT * FROM bookmarkedchapters WHERE user_id='{current_user.id}' AND book_id='{book.id}'"):
                 bookmarkedChapters.append(chapter.chapter_id)
             if current_user.id == book.author:
-                return render_template("simulator.html", user=current_user, book=book, chapters=chapters, book_genres=da_book_genres, bookmarkedChapters=bookmarkedChapters)
+                return render_template("simulator.html", user=current_user, book=book, chapters=chapters, book_genres=da_book_genres, bookmarkedChapters=bookmarkedChapters, comments = comments)
             else:
-                return render_template("viewer_book_page.html", user=current_user, book=book, bookmarkedChapters=bookmarkedChapters)
+                return render_template("viewer_book_page.html", user=current_user, book=book, bookmarkedChapters=bookmarkedChapters, comments = comments)
         else:
             bookmarkedChapters = []
-            return render_template("viewer_book_page.html", user=current_user, book=book, book_genres=da_book_genres, bookmarkedChapters=bookmarkedChapters)
+            return render_template("viewer_book_page.html", user=current_user, book=book, book_genres=da_book_genres, bookmarkedChapters=bookmarkedChapters, comments = comments)
     if request.method == 'POST':
         chapter_title = request.form.get('chapter-title')
         context = request.form.get('chapter-context')
@@ -352,3 +355,40 @@ def add_last_chapter(bid, cid):
         h.last_chapter = cid
         db.session.commit()
         return jsonify({'msg': 'last chapter updated'})
+
+@views.route('post-comment', methods=['POST'])
+@login_required
+def postComment():
+    comment = json.loads(request.data)
+    bookId = comment['bookId']
+    userId = current_user.id
+    username = current_user.username
+    message = comment['message']
+    book = Book.query.get(bookId)
+    if book:
+        insert_request = Comments(
+            book_id=bookId, user_id=userId, username=username, message=message
+        )
+        db.session.add(insert_request)
+        db.session.commit()
+        flash('Comment successfully posted!',
+                category='success')
+    return jsonify({})
+
+
+@views.route('delete-comment', methods=['POST'])
+@login_required
+def deleteComment():
+    commentRequest = json.loads(request.data)
+    commentId = commentRequest['commentId']
+    comment = Comments.query.get(commentId)
+    if comment:
+        comment_exist = Comments.query.filter_by(
+            id = commentId).first()
+        if comment_exist:
+            db.session.delete(comment_exist)
+            db.session.commit()
+            flash('Chapter bookmark removed.', category='success')
+        else:
+            flash('Failed to delete comment', category='error')
+    return jsonify({})
