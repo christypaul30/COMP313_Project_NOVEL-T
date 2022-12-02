@@ -218,7 +218,7 @@ class Comments(db.Model):
     book_id = db.Column("book_id", db.ForeignKey('book.id'), nullable=False)
     user_id = db.Column("user_id", db.ForeignKey('user.id'), nullable=False)
     username = db.Column("username", db.ForeignKey('user.username'), nullable=False)
-    message = db.Column(db.String(240))
+    message = db.Column(db.String(360))
 
     def __init__(self, book_id, user_id, username, message):
         self.book_id = book_id

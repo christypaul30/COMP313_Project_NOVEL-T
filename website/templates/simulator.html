@@ -126,7 +126,9 @@
     <div class="form-group">
         <form>
             <label for="commentTextarea"><b>Write a Comment: (Commenting as: {{user.username}} )</b></label>
-            <textarea class="form-control" id="commentTextarea" rows="4" placeholder="Write your comment here"></textarea>
+            </br>
+            <label>Max 360 characters.</label>
+            <textarea class="form-control" id="commentTextarea" rows="4" placeholder="Write your comment here" maxlength="360"></textarea>
             <button class="btn btn-success mx-1" type="button" onclick='comment({{book.id}}, document.getElementById("commentTextarea").value)'>Post comment</button>
         </form>
     </div>
