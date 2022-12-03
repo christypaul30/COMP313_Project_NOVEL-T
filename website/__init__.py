@@ -16,7 +16,7 @@ def create_app():
     if ENV == 'dev':
         app.debug = True
         print("Using dev server")
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:steven@localhost/novelt'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost/novelt'
     else:
         app.debug = False
         print("Using production server")

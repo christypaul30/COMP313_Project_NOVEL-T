@@ -164,3 +164,21 @@ function unfocusPage(){
     content.classList.remove("content-focused");
     var button = document.getElementById("focusBtn").setAttribute( "onClick", "javascript: focusPage();" );
 }
+
+function comment(bookId, message){
+    fetch('/post-comment', {
+        method: 'POST',
+        body: JSON.stringify({ bookId: bookId, message: message})
+    }).then((_res) =>{
+        window.location.reload();
+    });
+}
+
+function deleteComment(commentId){
+    fetch('/delete-comment', {
+        method: 'POST',
+        body: JSON.stringify({ commentId: commentId})
+    }).then((_res) =>{
+        window.location.reload();
+    });
+}

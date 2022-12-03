@@ -211,3 +211,17 @@ class BookHistory(db.Model):
         self.user_id = user_id
         self.book_id = book_id
         self.last_chapter = last_chapter
+
+class Comments(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column("book_id", db.ForeignKey('book.id'), nullable=False)
+    user_id = db.Column("user_id", db.ForeignKey('user.id'), nullable=False)
+    username = db.Column("username", db.ForeignKey('user.username'), nullable=False)
+    message = db.Column(db.String(360))
+
+    def __init__(self, book_id, user_id, username, message):
+        self.book_id = book_id
+        self.user_id = user_id
+        self.username = username
+        self.message = message
