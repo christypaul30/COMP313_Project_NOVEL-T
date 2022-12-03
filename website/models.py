@@ -50,8 +50,9 @@ class Book(db.Model):
     book_chapters = db.relationship(
         'BookChapters', backref=db.backref('book_chapters', lazy=True))
     date_updated = db.Column(db.DateTime(timezone=True), nullable=False)
+    visibility = db.Column(db.String, nullable=False)
 
-    def __init__(self, book_title, author, prologue=None, book_genres=None, book_chapters=None, date_updated=None):
+    def __init__(self, book_title, author, visibility, prologue=None, book_genres=None, book_chapters=None, date_updated=None):
         if book_chapters is None:
             book_chapters = []
         if book_genres is None:
@@ -62,6 +63,7 @@ class Book(db.Model):
         self.book_genres = book_genres
         self.book_chapters = book_chapters
         self.date_updated = date_updated
+        self.visibility = visibility
 
 
 class BookChapters(db.Model):

@@ -142,6 +142,7 @@ def edit_book():
         book.author = book.author
         book.prologue = prologue
         book.updated_date = func.now()
+        book.visibility=request.form.get("visibility")
 
         db.session.commit()
         # updated_book = Book(id=book_id, book_title=book_title, author=author, prologue=prologue, publish_date=publish_date)
