@@ -9,6 +9,21 @@
         <p align="center"><br><input type="text" align="center" id="author"      name="author" value={%print(user.username)%}      readonly="readonly"> </p>
        </div>
     <p align="center"> Chapter/Prologue Text  <br><textarea class="form-control" name="prologue"></textarea></p>
+
+    Visibility
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="visibility" id="public" value="public" checked>
+        <label class="form-check-label" for="public">
+            Public
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="visibility" id="private" value="private">
+        <label class="form-check-label" for="private">
+            Private
+        </label>
+    </div>
+
      <div class="container">
       <ul class="ks-cboxtags">
           {% for element in form_checkboxes %}

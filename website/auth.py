@@ -169,7 +169,8 @@ def add_book_page():
                 book_title=genre_object.get("book_title"),
                 author=current_user.id,
                 prologue=genre_object.get("prologue"),
-                date_updated=func.now()
+                date_updated=func.now(),
+                visibility=request.form.get("visibility")
             )
             db.session.add(new_book)
             db.session.commit()
