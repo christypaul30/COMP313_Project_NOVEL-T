@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %} Contact Us {% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header bg-primary text-white" data-i18n-french="Contactez nous"><i class="fa fa-envelope"></i> Contact us
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/contactus">
+                        <div class="form-group">
+                            <label for="name" data-i18n-french="Nom">Name</label>
+                            <input type="text" class="form-control" id="name" data-i18n-french="Entrez le nom" data-i18n-en="Enter name" aria-describedby="emailHelp" placeholder="Enter name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-i18n-french="Adresse e-mail">Email address</label>
+                            <input type="email" class="form-control" id="email" data-i18n-french="Entrez l'e-mail" data-i18n-en="Enter email" aria-describedby="emailHelp" placeholder="Enter email" required>
+                            <small id="emailHelp" class="form-text text-muted" data-i18n-french="Nous ne partagerons jamais votre e-mail avec quelqu'un d'autre.">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" data-i18n-french="Message">Message</label>
+                            <textarea class="form-control" id="message" rows="6" required></textarea>
+                        </div>
+                        <div class="mx-auto">
+                        <button type="submit" class="btn btn-primary text-right" data-i18n-french="Soumettre">Submit</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="card bg-light mb-3">
+                <div class="card-header bg-success text-white text-uppercase" data-i18n-french="Notre emplacement"><i class="fa fa-home"></i> Our Location</div>
+                <div class="card-body">
+                    <p data-i18n-french="Collège du centenaire">Centennial College</p>
+                    <p data-i18n-french="941, avenue Progress">941 Progress Ave</p>
+                    <p data-i18n-french="Scarborough, Ontario">Scarborough, Ontario</p>
+                    <p>M1G 3T8</p>
+                    <p>Canada</p>
+                    <p>Email: support@novelt.com</p>
+                    <p>Tel. +1 647 443 5446</p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

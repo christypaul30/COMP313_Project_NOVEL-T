@@ -177,3 +177,39 @@ function changeLanguage(language,target){
         localStorage.setItem("language",'french');
     }
 }
+function gotoNextPrev(id) {
+    if (id) {
+        window.location.href = "view-chapter?chapter=" + id;
+    }
+
+}
+
+function focusPage(){
+    var content = document.getElementById("chapterContent");
+    content.classList.add("content-focused");
+    var button = document.getElementById("focusBtn").setAttribute( "onClick", "javascript: unfocusPage();" );
+}
+
+function unfocusPage(){
+    var content = document.getElementById("chapterContent");
+    content.classList.remove("content-focused");
+    var button = document.getElementById("focusBtn").setAttribute( "onClick", "javascript: focusPage();" );
+}
+
+function comment(bookId, message){
+    fetch('/post-comment', {
+        method: 'POST',
+        body: JSON.stringify({ bookId: bookId, message: message})
+    }).then((_res) =>{
+        window.location.reload();
+    });
+}
+
+function deleteComment(commentId){
+    fetch('/delete-comment', {
+        method: 'POST',
+        body: JSON.stringify({ commentId: commentId})
+    }).then((_res) =>{
+        window.location.reload();
+    });
+}

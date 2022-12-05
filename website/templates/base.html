@@ -34,22 +34,21 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbar">
-            <ul class="search-container">
-                <form method="POST">
-                <input type="text" placeholder="Search..." data-i18n-french="Recherche..." data-i18n-en="Search..."  name="search_string">
-                <button>
-                    <input type="submit" name="type" value="search">
-                    </button>
-                </form>
-            </ul>
-
-            
+          
+          <ul class="search-container">
+            <form method="POST">
+              <input type="text" placeholder="Search.." data-i18n-french="Recherche..." data-i18n-en="Search..." name="search_string">
+              <button>
+                <input type="submit" name="type" value="search">
+              </button>
+            </form>
+          </ul>
+          <a class="nav-item nav-link" id="home-page" href="/" data-i18n-french="Page d'accueil">Home Page</a>
+          <a class="nav-item nav-link" id="contactus-page" href="/contactus" data-i18n-french="Contactez nous">Contact Us</a>
             {% if user.is_authenticated %}
             <ul class="nav navbar-nav">
-
-                
                 <a class="nav-item nav-link" id="stats-page" href="/stats-page" data-i18n-french="Page de Stats">Stats Page</a>
-                <a class="nav-item nav-link" id="home-page" href="/" data-i18n-french="Page d'accueil">Home Page</a>
+
 
             </ul>
 

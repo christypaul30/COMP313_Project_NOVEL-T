@@ -50,8 +50,9 @@ class Book(db.Model):
     book_chapters = db.relationship(
         'BookChapters', backref=db.backref('book_chapters', lazy=True))
     date_updated = db.Column(db.DateTime(timezone=True), nullable=False)
+    visibility = db.Column(db.String, nullable=False)
 
-    def __init__(self, book_title, author, prologue=None, book_genres=None, book_chapters=None, date_updated=None):
+    def __init__(self, book_title, author, visibility, prologue=None, book_genres=None, book_chapters=None, date_updated=None):
         if book_chapters is None:
             book_chapters = []
         if book_genres is None:
@@ -62,6 +63,7 @@ class Book(db.Model):
         self.book_genres = book_genres
         self.book_chapters = book_chapters
         self.date_updated = date_updated
+        self.visibility = visibility
 
 
 class BookChapters(db.Model):
@@ -211,3 +213,17 @@ class BookHistory(db.Model):
         self.user_id = user_id
         self.book_id = book_id
         self.last_chapter = last_chapter
+
+class Comments(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column("book_id", db.ForeignKey('book.id'), nullable=False)
+    user_id = db.Column("user_id", db.ForeignKey('user.id'), nullable=False)
+    username = db.Column("username", db.ForeignKey('user.username'), nullable=False)
+    message = db.Column(db.String(360))
+
+    def __init__(self, book_id, user_id, username, message):
+        self.book_id = book_id
+        self.user_id = user_id
+        self.username = username
+        self.message = message

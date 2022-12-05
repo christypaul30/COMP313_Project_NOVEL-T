@@ -86,7 +86,41 @@
         {% endfor %}
         </ul>
 </div>
-
+<div id="comment-section" class="container">
+    <h3><b>Comments</b></h3>
+    <ul class="list-group" id="comments">
+        {% for comment in comments %}
+            {% if book.id == comment.book_id %}
+                <li class="d-flex list-group-item">
+                    <div id="comment" class="list-group">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{comment.username}}</h5>
+                        </div>
+                        <p class="mb-1">{{comment.message}}</p>
+                    </div>
+                    {% if user.id == comment.user_id %}
+                        <div class="d-flex align-self-center ml-auto">
+                            <button type="button" class="close" onclick='deleteComment({{comment.id}})'>&times;</button>
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <div class="form-group">
+        {% if user.is_authenticated %}
+            <form>
+                <label for="commentTextarea"><b>Write a Comment: (Commenting as: {{user.username}} )</b></label>
+                </br>
+                <label data-i18n-french="Maximum 360 caractères.">Max 360 characters.</label>
+                <textarea class="form-control" id="commentTextarea" rows="4" data-i18n-french="Écrivez votre commentaire ici" data-i18n-en="Write your comment here" placeholder="Write your comment here" placeholder="Write your comment here" maxlength="360"></textarea>
+                <button class="btn btn-success mx-1" type="button" onclick='comment({{book.id}}, document.getElementById("commentTextarea").value)' data-i18n-french="Poster un commentaire">Post comment</button>
+            </form>
+        {% else %}
+            <h4 align="center" data-i18n-french="Vous devez être connecté pour commenter.">You must be logged in to comment.</h4>
+        {% endif %}
+    </div>
+</div>
 
 
 <style>
