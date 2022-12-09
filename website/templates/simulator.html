@@ -129,7 +129,14 @@
             </br>
             <label>Max 360 characters.</label>
             <textarea class="form-control" id="commentTextarea" rows="4" placeholder="Write your comment here" maxlength="360"></textarea>
-            <button class="btn btn-success mx-1" type="button" onclick='comment({{book.id}}, document.getElementById("commentTextarea").value)'>Post comment</button>
+            <button class="btn btn-success mx-1" type="button"
+                    onclick='comment({{book.id}}, document.getElementById("commentTextarea").value)'>
+                Post comment
+            </button>
+            <button class="btn btn-success mx-1" type="button"
+                    onclick='report({{book.id}}, document.getElementById("commentTextarea").value) '>
+                Report comment
+            </button>
         </form>
     </div>
 </div>
