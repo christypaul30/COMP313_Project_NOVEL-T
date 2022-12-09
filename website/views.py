@@ -379,8 +379,20 @@ def postComment():
 @views.route('report-comment', methods=['POST'])
 @login_required
 def postReport():
+    comment = json.loads(request.data)
+    bookId = comment['bookId']
+    userId = current_user.id
+    username = current_user.username
+    message = comment['message']
+    book = Book.query.get(bookId)
+    if book:
+        insert_request = Comments(
+            book_id=bookId, user_id=userId, username=username, message=message
+        )
+        db.session.commit()
         flash('Comment posted to admin!',
-                category='success')
+              category='success')
+    return jsonify({})
 
 @views.route('delete-comment', methods=['POST'])
 @login_required
