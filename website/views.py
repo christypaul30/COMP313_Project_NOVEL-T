@@ -376,6 +376,11 @@ def postComment():
                 category='success')
     return jsonify({})
 
+@views.route('report-comment', methods=['POST'])
+@login_required
+def postReport():
+        flash('Comment posted to admin!',
+                category='success')
 
 @views.route('delete-comment', methods=['POST'])
 @login_required

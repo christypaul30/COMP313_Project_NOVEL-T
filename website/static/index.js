@@ -174,6 +174,15 @@ function comment(bookId, message){
     });
 }
 
+function report(bookId, message){
+    fetch('/report-comment', {
+        method: 'POST',
+        body: JSON.stringify({ bookId: bookId, message: message})
+    }).then((_res) =>{
+        window.location.reload();
+    });
+}
+
 function deleteComment(commentId){
     fetch('/delete-comment', {
         method: 'POST',
