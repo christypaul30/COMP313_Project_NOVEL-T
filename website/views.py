@@ -399,3 +399,23 @@ def contact_us_page():
         flash("Your inquiry has been submitted successfully!", category="success")
         return redirect(url_for('views.backup_page', user=current_user))
     return render_template('contact_us.html', user=current_user)
+
+@views.route('/about-us', methods=['GET', 'POST'])
+def about_us_page():
+    if request.method == "POST":
+        return redirect(url_for('views.backup_page', user=current_user))
+    return render_template('about_us.html', user=current_user)
+
+@views.route('/terms', methods=['GET', 'POST'])
+@login_required
+def terms_of_service_page():
+    if request.method == "POST":
+         # Get the value of the "accepted_terms" checkbox from the form
+        accepted_terms = request.form.get('accepted_terms')
+        # Update the "accepted_terms" attribute of the current user
+        current_user.accepted_terms = bool(accepted_terms)
+        # Save the updated user object
+        db.session.commit()
+        return redirect(url_for('auth.home'))
+
+    return render_template('terms_of_service.html', user=current_user)
