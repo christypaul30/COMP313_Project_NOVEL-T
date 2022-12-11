@@ -3,7 +3,7 @@
 {% block content %}
 <h4 align="center">{{book.book_title}}</h4>
 <div align="center">
-    <button type="button" onclick="bookMark({{book.id}})"><i class="fa-solid fa-bookmark"> Bookmark Book</i></button>
+    <button type="button" onclick="bookMark({{book.id}})"><i class="fa-solid fa-bookmark" data-i18n-french="Livre de signets"> Bookmark Book</i></button>
 </div>
 <hr>
 <br>
@@ -12,23 +12,23 @@
     <div class="wrapper">
         <div class="details" align="center">
             <div class="row">
-                <div class="book-attribute">title(s):</div>
+                <div class="book-attribute" data-i18n-french="Titre(s):">title(s):</div>
                 <div class="attribute-context">{{book.book_title}}</div>
             </div>
             <div class="row">
-                <div class="book-attribute">Genre(s): </div>
+                <div class="book-attribute" data-i18n-french="Genre(s):">Genre(s): </div>
                 <div class="attribute-context">{{book.genre}}</div>
             </div>
             <div class="row">
-                <div class="book-attribute">Author: </div>
+                <div class="book-attribute" data-i18n-french="Auteur:">Author: </div>
                 <div class="attribute-context">{{book.author}}</div>
             </div>
             <div class="row">
-                <div class="book-attribute">rank: </div>
+                <div class="book-attribute" data-i18n-french="rang:">rank: </div>
                 <div class="attribute-context">N/A</div>
             </div>
             <div class="row">
-                <div class="book-attribute">rating: </div>
+                <div class="book-attribute" data-i18n-french="évaluation">rating: </div>
                 <div class="attribute-context">N/A</div>
             </div>
              <!-- Share Button - Steven Chen -->
@@ -41,6 +41,7 @@
                     data-title="Copied to Clipboard!"
                     id="sharebtn"
                     onclick="shareButton()"
+                    data-i18n-french="Partager le livre"
                     >
                     Share Book
                 </button>
@@ -51,7 +52,7 @@
 <br>
 <br>
 <div>
-    <h3 align="center"> Book Summary </h3>
+    <h3 align="center" data-i18n-french="Résumé du livre"> Book Summary </h3>
     <hr>
     <p align="center">{% print(book.prologue) %}</p>
 </div>
@@ -59,7 +60,7 @@
 <br>
 <div class="w3-container">
     <div class="container d-flex justify-content-center align-self-center">
-        <h3 class="mx-1"> Book Chapters </h3>
+        <h3 class="mx-1" data-i18n-french="Chapitres de livre"> Book Chapters </h3>
     </div>
     <hr>
     <ul class="list-group list-group-flush horizontal" id="books">
@@ -111,12 +112,12 @@
             <form>
                 <label for="commentTextarea"><b>Write a Comment: (Commenting as: {{user.username}} )</b></label>
                 </br>
-                <label>Max 360 characters.</label>
-                <textarea class="form-control" id="commentTextarea" rows="4" placeholder="Write your comment here" maxlength="360"></textarea>
-                <button class="btn btn-success mx-1" type="button" onclick='comment({{book.id}}, document.getElementById("commentTextarea").value)'>Post comment</button>
+                <label data-i18n-french="Maximum 360 caractères.">Max 360 characters.</label>
+                <textarea class="form-control" id="commentTextarea" rows="4" data-i18n-french="Écrivez votre commentaire ici" data-i18n-en="Write your comment here" placeholder="Write your comment here" placeholder="Write your comment here" maxlength="360"></textarea>
+                <button class="btn btn-success mx-1" type="button" onclick='comment({{book.id}}, document.getElementById("commentTextarea").value)' data-i18n-french="Poster un commentaire">Post comment</button>
             </form>
         {% else %}
-            <h4 align="center">You must be logged in to comment.</h4>
+            <h4 align="center" data-i18n-french="Vous devez être connecté pour commenter.">You must be logged in to comment.</h4>
         {% endif %}
     </div>
 </div>

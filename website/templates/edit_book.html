@@ -3,12 +3,12 @@
 {% block content %}
 
 <form method="POST">
-    <h5 align="center">Book Creation</h5>
+    <h5 align="center" data-i18n-french="Création de livres">Book Creation</h5>
     <div class="form-group">
         <br>
-        <p align="center"> Book Title   <br><input type="text" align="center" id="book-title"  name="book-title"  value={%print(book.book_title)%}></p>
-        <p align="center"> Author       <br><input type="text" align="center" id="author"      name="author"      value={%print(book.author)%}     readonly="readonly"> </p>
-        <p align="center"> Summary      <br><textarea class="form-control"    id="summary"     name="prologue">{%print(book.prologue)%}</textarea></p>
+        <p align="center" data-i18n-french=" Titre du livre"> Book Title   <br><input type="text" align="center" id="book-title"  name="book-title"  value={%print(book.book_title)%}></p>
+        <p align="center" data-i18n-french="Auteur "> Author       <br><input type="text" align="center" id="author"      name="author"      value={%print(book.author)%}     readonly="readonly"> </p>
+        <p align="center" data-i18n-french="Summary"> Summary      <br><textarea class="form-control"    id="summary"     name="prologue">{%print(book.prologue)%}</textarea></p>
     </div>
     Visibility
     <div class="form-check">
@@ -39,8 +39,8 @@
             </ul>
     </div>
     <div class="wrapper">
-        <button type="submit" value="Send Form" class="btn btn-primary">Accept Changes</button>
-        <button type="reset" class="btn btn-warning">Reset</button>
+        <button type="submit" value="Send Form" class="btn btn-primary" data-i18n-french="Accepter les changements">Accept Changes</button>
+        <button type="reset" class="btn btn-warning" data-i18n-french="Réinitialiser">Reset</button>
     </div>
 </form>
 <script>

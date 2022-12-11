@@ -2,21 +2,21 @@
 {% block title %} edit chapter {% endblock %}
 {% block content %}
 <form method="POST">
-    <h5 align="center">Chapter Editor</h5>
+    <h5 align="center" data-i18n-french="Éditeur de chapitre">Chapter Editor</h5>
     <hr>
     <br>
     <br>
     <div class="form-group" align="center">
-        <p align="center">Chapter Title</p>
+        <p align="center" data-i18n-french="Titre du chapitre">Chapter Title</p>
         <input align="center" type="text" value="{{chapter.chapter_title}}" id="form-title" name="form-title"><br><br><br>
-        <p align="center">Chapter Context</p>
+        <p align="center" data-i18n-french="Contexte du chapitre">Chapter Context</p>
         <textarea class="form-control" id="form-context" name="form-context">"{{chapter.context}}"</textarea>
         <input type="hidden" id="chapter-id" name="chapter-id" value="{{chapter.id}}">
         <input type="hidden" id="book-id" name="book-id" value="{{chapter.book_id}}">
 
     </div>
-        <button type="submit" value="Send Form" class="btn btn-primary">Confirm changes</button>
-        <button type="reset" class="btn btn-warning">reset</button>
-        <button type="button" class="btn btn-danger">cancel</button>
+        <button type="submit" value="Send Form" class="btn btn-primary" data-i18n-french="Confirmer les changements">Confirm changes</button>
+        <button type="reset" class="btn btn-warning" data-i18n-french="réinitialiser">reset</button>
+        <button type="button" class="btn btn-danger" data-i18n-french="annuler">cancel</button>
 </form>
 {% endblock %}

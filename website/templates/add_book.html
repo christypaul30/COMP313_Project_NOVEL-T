@@ -2,13 +2,19 @@
 {% block title %} add books {% endblock %}
 {% block content %}
 <form method="POST">
-    <h5 align="center">Book Creation</h5>
+    <h5 align="center" data-i18n-french="Création de livres">Book Creation</h5>
     <div class="form-group">
         <br>
-        <p align="center"> Book Title   <br><input type="text" align="center" id="book_title"  name="book_title"></p>
+        <p align="center" data-i18n-french="Titre du livre"> Book Title   <br>
+            <input type="text" align="center" id="book_title"  name="book_title">
+        </p>
         <p align="center"><br><input type="text" align="center" id="author"      name="author" value={%print(user.username)%}      readonly="readonly"> </p>
        </div>
-    <p align="center"> Chapter/Prologue Text  <br><textarea class="form-control" name="prologue"></textarea></p>
+
+       
+    <p align="center" data-i18n-french=" Texte du chapitre/prologue"> Chapter/Prologue Text  <br><textarea class="form-control" name="prologue"></textarea></p>
+
+    
 
     Visibility
     <div class="form-check">
@@ -23,6 +29,7 @@
             Private
         </label>
     </div>
+
 
      <div class="container">
       <ul class="ks-cboxtags">
@@ -50,8 +57,8 @@
       </ul>
     </div>
     <div class="wrapper">
-        <button type="submit" value="Send Form" class="btn btn-primary">Validate Book</button>
-        <button type="reset" class="btn btn-warning">Reset</button>
+        <button type="submit" value="Send Form" class="btn btn-primary" data-i18n-french="Valider le livre">Validate Book</button>
+        <button type="reset" class="btn btn-warning" data-i18n-french="Réinitialiser">Reset</button>
     </div>
 </form>
 
