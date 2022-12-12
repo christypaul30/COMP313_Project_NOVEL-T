@@ -87,12 +87,13 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150), nullable=False)
     security_question = db.Column(db.String(150), nullable=True)
     security_answer = db.Column(db.String(150), nullable=True)
+    accepted_terms = db.Column(db.Boolean, nullable=False, default=False)
     sheets = db.relationship('CharacterSheet')
     book = db.relationship('Book', backref=db.backref('books', lazy=True))
     library = db.relationship(
         'Library', backref=db.backref('library', lazy=True))
 
-    def __init__(self, email, username, password, security_question=None, security_answer=None, sheets=None, book=None):
+    def __init__(self, email, username, password, security_question=None, security_answer=None, accepted_terms=False, sheets=None, book=None):
         if book is None:
             book = []
         if sheets is None:
@@ -102,6 +103,7 @@ class User(db.Model, UserMixin):
         self.password = password
         self.security_question = security_question
         self.security_answer = security_answer
+        self.accepted_terms = accepted_terms
         self.sheets = sheets
         self.book = book
 

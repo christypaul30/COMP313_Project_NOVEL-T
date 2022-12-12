@@ -82,6 +82,11 @@ def home():
         return render_template('home.html', books=result, user=current_user)
     if not current_user.is_authenticated:
         verification()
+        
+        if current_user.is_authenticated:
+        if not current_user.accepted_terms:
+            return redirect(url_for('views.terms_of_service_page'))
+        
     books = Book.query.order_by(Book.book_title)
     return render_template("home.html", user=current_user, books=books)
 

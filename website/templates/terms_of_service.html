@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% block title %} Terms of Service {% endblock %} {%
+block content %}
+
+<div class="container mx-auto px-5">
+  <div class="border rounded p-3">
+    <div class="mb-5">
+      <!-- Terms and conditions template -->
+      <h1>Terms and Conditions</h1>
+      
+      <p>
+        By accessing this website, you agree to the following terms and
+        conditions:
+      </p>
+      <ul>
+        <li>
+          All content on this website is the property of the website owner and
+          is protected by copyright laws.
+        </li>
+        <li>
+          You may not copy, distribute, or use any content on this website
+          without the express written permission of the website owner.
+        </li>
+        <li>
+          By using this website, you agree to indemnify and hold the website
+          owner harmless from any claims arising out of your use of the website.
+        </li>
+      </ul>
+    </div>
+    <!-- Form to submit acceptance of terms and conditions -->
+    <form action="/terms" method="post" class="row">
+      <!-- Checkbox input to accept terms and conditions -->
+      <div class="container float-left">
+        <input
+          type="checkbox"
+          name="accepted_terms"
+          id="accepted_terms"
+          value="True"
+          {{ "checked" if user.accepted_terms }}
+          required
+        />
+        <label for="accepted_terms">I accept the terms and conditions</label>
+      </div>
+      <div class="container float-right">
+        <input
+          type="submit"
+          value="Submit"
+          class="btn btn-outline-dark float-right"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Terms and Conditions END -->
+
+{% endblock %}
